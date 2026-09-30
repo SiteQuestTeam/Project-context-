@@ -1,0 +1,3 @@
+# Trust comes from results confirmed by residents, not from ratings
+
+Organisations are not rated with stars. Their Track record is the number of Initiatives they led that Residents confirmed as done, and a Need becomes Resolved only when the Residents who supported it confirm it, never on the Organisation's own word. Star ratings are easy to game and one bad review can sink a small volunteer group; letting an Organisation mark its own work as done would let it inflate its Track record. Verification is separate: an Organisation with a KRS number is checked automatically against the public KRS register and gets a "Verified" badge; groups without KRS may still take part, without the badge.
