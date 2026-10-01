@@ -14,7 +14,7 @@ Pojęcia: [CONTEXT.md](../CONTEXT.md). Kolejność w poziomie = kolejność budo
 8. **Logowanie** (e-mail / Google).
 9. **Pętla:** Mieszkańcy potwierdzają „Rozwiązana” → Inicjatywa staje się Sprawdzonym rozwiązaniem. (Przesunięte z Poziomu 2: najmocniejszy argument dla HubMI.pl, a kosztuje mało.)
 
-## Poziom 2: noc, jeśli Poziom 1 działa
+## Poziom 2: jeśli Poziom 1 działa
 
 - Znaczek „Zweryfikowana” przez API KRS.
 - Zakładka „Moje”, napis „czeka od N dni”, pytanie po 14 dniach.
