@@ -1,3 +1,7 @@
+---
+status: superseded by ADR 0008
+---
+
 # Photos are blurred on our server before any AI model sees them; originals are deleted
 
 Every uploaded photo goes through automatic face and licence-plate blurring (EgoBlur) on our own server first; only the blurred copy is sent to an AI model and only the blurred copy is stored, while the original is deleted straight away. No face or plate of a bystander ever reaches Google or Anthropic, and we hold no personal data from photos, which answers GDPR (RODO) questions up front. It also matters for the model choice: the Gemini API free tier's terms say its input may be used to improve Google's products, may be read by human reviewers, and must not contain personal information.

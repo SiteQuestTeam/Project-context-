@@ -1,6 +1,6 @@
-# Sąsiedzisko (nazwa robocza)
+# SideQuest
 
-Projekt zespołu na HackYeah 2026 (3–4 października, Kraków), zadanie partnerskie HubMI.pl.
+Projekt zespołu na HackYeah 2026 (3–4 października, Kraków), zadanie SMART CITY (PKO).
 
 **Zacznij od [BRIEF.md](BRIEF.md).** Tam jest cały pomysł, podział ról i linki do reszty.
 

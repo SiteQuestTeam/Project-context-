@@ -1,143 +1,165 @@
-# Sąsiedzisko — brief dla zespołu
+# SideQuest — brief dla zespołu (wersja 3, zadanie Smart City)
 
-**HackYeah 2026 · 3–4 października · Tauron Arena Kraków · zadanie partnerskie HubMI.pl (15 000 PLN)**
+**HackYeah 2026 · 3–4 października · Tauron Arena Kraków · zadanie SMART CITY (PKO), nagroda 8 000 PLN**
 
-> **W skrócie.** Mieszkańcy Krakowa dodają to, czego brakuje w ich okolicy (**Potrzeby**) i to, co chcą z tym zrobić (**Inicjatywy**).
-> AI łączy każdą Potrzebę z tymi, którzy mogą pomóc: odpowiednim urzędem, organizacją społeczną albo sprawdzonym rozwiązaniem z innego miejsca.
-> Gdy mieszkańcy się dogadają, AI pisze za nich szkic wniosku do miasta. Każda udana Inicjatywa staje się podpowiedzią dla kolejnych dzielnic.
+> **W skrócie.** Pokémon Go, ale dla działań społecznych.
+> Młodzi dorośli wychodzą z domu i robią prawdziwe rzeczy dla swojej okolicy: znajdują problemy (**Zwiad**), pomagają ludziom (**Misje**, solo albo w grupie) i wspólnie zmieniają miejsca (**Rajdy**).
+> Szare miejsca na mapie robią się zielone, gdy problem znika.
+> Gracze zbierają **Punkty**, **Odznaki** i **Rangi**, chwalą się nimi w social mediach, a ich dzielnice walczą w **Lidze dzielnic**.
+> Lokalne firmy dają **Nagrody** (np. darmową kawę).
+> Miasto po raz pierwszy widzi, **kto naprawdę działa** i **które problemy ludzie naprawdę potwierdzili na miejscu**.
 
-`Sąsiedzisko` to nazwa robocza.
+Nazwa aplikacji: **SideQuest**. Nazwy w grze (Zwiad, Misja, Rajd…) są robocze; ostateczne wybiera zespół psychologiczny.
+
+**Termin oddania: niedziela 4 października, przyjmujemy 11:00 rano** (regulamin pisze „11:00 PM”, pytamy mentora). Oddajemy wcześniej, nie w ostatniej minucie.
 
 ---
 
-## 1. Dlaczego HubMI.pl, a nie zadanie Krakowa
+## 1. Problem (slajd 1)
 
-Zaczynaliśmy od „aplikacji do zgłaszania usterek dla Krakowa”. Po przeczytaniu listy zadań zmieniliśmy kierunek:
+> **Młodzi dorośli w Krakowie nie znają swoich sąsiadów i nie biorą udziału w życiu okolicy. Nieliczni, którzy działają, są niewidoczni, więc rady dzielnic zapełniają politycy, a nie ludzie, którzy coś robią.**
 
-- **Zadanie miasta („Cracow without barriers”, 5 000 PLN)** dotyczy dostępności miejsc dla osób z niepełnosprawnościami, nie usterek.
-- **Samo zgłaszanie usterek już istnieje.** Aplikacja mKraków ma formularz na dziury i połamane ławki. Innowacyjność to 30% oceny.
-- **HubMI.pl (15 000 PLN)** pasuje do naszej części „społecznej” (rozmowy mieszkańców o okolicy), a nagroda jest trzy razy większa.
+Mentorzy PKO chcą jednego konkretnego problemu społecznego, nie ogólnej platformy. To jest nasz problem.
 
-Rdzeń pomysłu (zdjęcie + miejsce + AI sortuje + mapa) zostaje. Usterka jest teraz jednym z rodzajów Potrzeby.
+## 2. Dlaczego Smart City, a nie HubMI.pl
 
-## 2. Czego chce HubMI.pl
+ROPS (HubMI.pl) nie chce oddolnych inicjatyw mieszkańców, a prawa do kodu przeszłyby na nich. Smart City ma w zakresie „komunikację między mieszkańcami a instytucjami”, takie same kryteria, a **prawa autorskie zostają u nas**. Szczegóły: [ADR 0007](docs/adr/0007-smart-city-task-not-hubmi.md).
+Stary rdzeń (Potrzeby, Pomocnicy, szkic wniosku) odpada. Robimy grę: [ADR 0008](docs/adr/0008-game-replaces-hubmi-core.md).
 
-Pełna treść zapowiedzi zadania ze strony HackYeah:
+## 3. Jak działa gra
 
-> *How can we ensure that good ideas for solving social problems do not go unnoticed? Use technology to connect residents' needs more effectively with knowledge, proven solutions, and people ready to take action. Create a concept that will help valuable initiatives reach the places where they are needed most and facilitate cooperation between residents, institutions, and social organizations.*
+Pojęcia pisane wielką literą: [CONTEXT.md](CONTEXT.md).
 
-Rozkładamy to na pięć potrzeb:
+**Gracz** wybiera przy rejestracji swoją **Dzielnicę** (jedną z 18).
 
-| # | HubMI.pl chce… |
+### Trzy klasy akcji
+
+Różnica między Misją a Rajdem: **czy zmienia się miejsce**, a nie „solo czy w grupie”.
+
+| Klasa | Co robi | Przykład | Dowód |
+|---|---|---|---|
+| **Zwiad** | pokazuje problem (pasywnie), naprawia ktoś inny | przy bloku jest rura, do której ludzie przypinają rowery → „brakuje stojaka” | **Zdjęcie na żywo** w tym miejscu |
+| **Misja** | pomaga ludziom albo okolicy, **bez zmiany miejsca**, solo albo w grupie | solo: pomóż sąsiadce wnieść zakupy; w grupie: pomagamy seniorom ustawić telefony w bibliotece | solo: zdjęcie + GPS; w grupie: **Odbicie** (skan kodu) |
+| **Rajd** | **zmienia miejsce**, w grupie, zwykle z Szarego miejsca | sprzątanie skweru | Odbicia + zdjęcie „przed” → Rajd → zdjęcie „po” |
+
+- **Zdjęcie na żywo:** tylko aparat w aplikacji, bez galerii, GPS do ok. 50 m od miejsca. Trzeba się pofatygować na miejsce.
+- **Trudność** wylicza aplikacja, nie Organizator (inaczej każdy wybrałby najwyższą). Weryfikator może ją zmienić o jeden poziom:
+
+| Poziom | Co |
 |---|---|
-| **H1** | żeby **dobre pomysły** na problemy społeczne **nie przepadały** |
-| **H2** | połączyć **potrzeby mieszkańców** z **wiedzą i sprawdzonymi rozwiązaniami** |
-| **H3** | połączyć je z **ludźmi gotowymi działać** |
-| **H4** | żeby wartościowe inicjatywy **trafiały tam, gdzie są najbardziej potrzebne** |
-| **H5** | **współpracy** mieszkańców, **instytucji** i **organizacji społecznych** |
+| **Miedź** | Zwiad, Potwierdzenie, akcja do 15 min |
+| **Srebro** | do 1 h |
+| **Złoto** | do 2 h |
+| **Platyna** | 2–4 h |
+| **Diament** | Rajd, który zamienia Szare miejsce w zielone |
 
-Uwaga: zadanie mówi „create a **concept**”. Liczy się pomysł i jego sensowność, a działający prototyp go uwiarygadnia.
-Pełna treść zadania i jego zasady oceny pojawią się dopiero, gdy zadania się odblokują. Wtedy sprawdzamy, czy coś się nie zmieniło.
+Wyższy poziom daje więcej Punktów.
 
-## 3. Jak Sąsiedzisko odpowiada na każdą z nich
+### Szare miejsca
 
-| HubMI.pl | Nasza odpowiedź |
-|---|---|
-| **H1** dobre pomysły nie przepadają | Każda zakończona **Inicjatywa** sama staje się **Sprawdzonym rozwiązaniem**, które aplikacja podpowiada w innych dzielnicach. Pomysł, który zadziałał w jednym miejscu, nie ginie. |
-| **H2** potrzeby ↔ wiedza | Przy każdej nowej Potrzebie AI pokazuje pasujące **karty Sprawdzonych rozwiązań**: co zrobiono, gdzie, kto, za ile, ze źródłem. |
-| **H3** potrzeby ↔ ludzie | **Organizacje** zgłaszają się do prowadzenia Inicjatyw, **mieszkańcy** dołączają jako wolontariusze albo dają **Poparcie**. |
-| **H4** inicjatywy trafiają tam, gdzie trzeba | **Mapa dla urzędnika** pokazuje, gdzie zbierają się Potrzeby, ile mają Poparć i jak są groźne. Potrzeby „bez reakcji” są wyraźnie oznaczone. |
-| **H5** mieszkańcy + instytucje + organizacje | Każda Potrzeba pokazuje **odpowiedzialny urząd**. Droga do miasta idzie przez prawdziwą procedurę **Inicjatywy lokalnej**, a AI pisze **szkic wniosku**. |
+- **Zwiad tworzy Szare miejsce** na mapie.
+- Inni Gracze mogą tam pójść i je **Potwierdzić** swoim Zdjęciem na żywo. **Nie da się poprzeć z kanapy.** Potwierdzenie zapisuje się w Historii Gracza.
+- Szare miejsce ma pole **„Kto naprawi”**: **Miasto / Gildia / Gracze**. Przy Zwiadzie aplikacja zadaje 2 pytania tak/nie, zawsze w tej kolejności:
+  1. „Czy to teren lub sprzęt miasta, albo potrzebna jest zgoda lub pieniądze miasta?” → **Miasto**
+  2. „Czy trzeba specjalnych umiejętności albo narzędzi (spawanie, prąd, praca na wysokości)?” → **Gildia**
+  3. Oba „nie” → **Gracze**
 
-## 4. Jak to działa: historia na demo
+  Weryfikator może poprawić wynik. Przykład: stojak na miejskim chodniku → Miasto (które może zlecić go Gildii). Stojak na terenie spółdzielni → Gildia. Śmieci na skwerze → Gracze. Poziom 2: AI patrzy na zdjęcie i miejsce i podpowiada odpowiedź. Pitch: mapa gruntów miasta i nauka z wcześniejszych projektów.
+  - **Gracze:** przycisk „Załóż Rajd”, a zdjęcie „przed” już jest.
+  - **Gildia:** potrzebne umiejętności, których zwykły Gracz nie ma (np. spawanie stojaka). Gildia to wspólna nazwa dla wielu organizacji (rzemieślnicy, NGO, firmy). W wersji demo to tylko etykieta.
+  - **Miasto:** trafia do Widoku dla miasta.
+- Gdy problem znika, ktoś robi zdjęcie „po”. **Miejsce robi się zielone.** Mapa dzielnicy powoli zmienia się z szarej w zieloną.
 
-1. **Pani Zofia dodaje Potrzebę:** „Brak ławek przy ul. X, seniorzy nie mają gdzie odpocząć” + zdjęcie.
-2. **AI od razu pokazuje:** kategorię, poziom zagrożenia, odpowiedzialny urząd, podobne Potrzeby w pobliżu i kartę Sprawdzonego rozwiązania.
-3. **30 sąsiadów daje Poparcie** i rozmawia w komentarzach.
-4. **AI robi Podsumowanie dyskusji:** z czym się zgadzają, o co się spierają.
-5. **Ktoś zakłada Inicjatywę** „3 ławki przy ul. X”.
-6. **Organizacje zgłaszają się** do prowadzenia. Autor wybiera jedną, widząc jej dorobek.
-7. **AI pisze szkic wniosku** o Inicjatywę lokalną.
-8. **Ławki stoją. Mieszkańcy potwierdzają.** Inicjatywa staje się Sprawdzonym rozwiązaniem dla innych dzielnic.
-9. **Ostatni ekran: mapa dla urzędnika.**
+### Akcje grupowe (Misje grupowe i Rajdy)
 
-Demo pokazujemy na Dzielnicy II Grzegórzki, ale aplikacja działa w całym Krakowie. Jury może dodać Potrzebę na żywo z hali.
+- Zakłada je każdy Gracz albo sam **Hub** (prawdziwe miejsce publiczne, np. biblioteka, dom kultury).
+- Mają godzinę startu, długość, minimalną liczbę osób i **Role** z miejscami (np. „kierowca 0/1”, „fotograf 2/3”). Gdy brakuje ludzi, mapa pokazuje „brakuje N”. Widać, kto już dołączył: „Ola, Kuba i 7 innych”.
+- Każdy uczestnik skanuje kod **Organizatora** na miejscu (**Odbicie**).
+- W Rajdzie Organizator robi też zdjęcie „przed” i „po” **samego miejsca**.
+- Po Rajdzie powstaje **Karta Rajdu**: przed → po, liczba osób, godziny i **Rzadkość**: **Zwykły** (do 5 osób), **Rzadki** (5–15), **Epicki** (ponad 15 albo Szare miejsce zrobiło się zielone).
+- **Znajomi:** po Rajdzie możesz dodać ludzi, którzy tam byli. Tak poznajesz sąsiadów. (Nazwa do wymyślenia.)
+
+### Postęp
+
+- **Punkty** tylko za potwierdzone działania, według Trudności. Za klikanie, polubienia, zaproszenia i rejestrację: zero. Premia dla Organizatora, gdy jego akcja zbierze minimum osób.
+- **Ranga:** jedna, rośnie po progach Punktów. Daje wiarygodność, nie władzę. Na najwyższych Rangach można zostać Weryfikatorem. Osobne ścieżki (Ekologia, Kultura…) tylko w pitchu.
+- **Odznaki** za konkretne osiągnięcia, np. „Iskra”: 10 osób dołączyło do twojego Rajdu.
+- **Historia:** profil pokazuje wszystkie akcje, w których Gracz brał udział, osobno Zwiady, Misje i Rajdy. Należy do człowieka i zostaje, gdy zmieni dzielnicę.
+- **Bez serii (streaków) i bez presji.** Kto wraca po miesiącu, widzi „Witaj ponownie, oto 3 proste akcje obok ciebie”.
+- **Karta do udostępnienia:** nowa Odznaka, Ranga albo Karta Rajdu to gotowy obrazek na Instagram story. **Ludzie lubią się chwalić**: to nasza darmowa reklama.
+- **Nagrody** odblokowują się po Randze albo Odznace. Nie kupuje się ich za Punkty. Prawdziwe od lokalnych **Sponsorów** (darmowa kawa) albo kosmetyczne (tytuł „Animator Dzielnicy”, ramka avatara). Dzielnica, która wygra Ligę, odblokowuje swoim aktywnym Graczom „Pucharowy rabat”.
+- **Liga dzielnic:** potwierdzone godziny działań **na 1000 mieszkańców**, więc mała dzielnica może wygrać z dużą. **Sezon** trwa miesiąc i się resetuje. Sezon może mieć temat (np. „Seniorzy”): daje specjalną Odznakę i wyróżnione Misje, ale nie zmienia liczenia godzin.
+
+## 4. Jak nie dajemy się oszukać
+
+Jury na pewno zapyta „a jak ktoś oszukuje?”.
+
+- **Kod akcji grupowej zmienia się co 30 sekund** i działa tylko na miejscu (GPS). Zrzut ekranu wysłany koledze do domu nie działa.
+- **Zdjęcie na żywo:** tylko z aparatu w aplikacji, na miejscu.
+- **Weryfikatorzy:** Gracze z najwyższą Rangą sprawdzają Dowody (nigdy ludzi). Każdy Dowód trafia do 3 Weryfikatorów, 2 muszą się zgodzić. Weryfikator, który często się nie zgadza z innymi, traci to prawo. Pokémon Go robi to samo z nowymi PokéStopami (program Wayfarer).
+- **Punkty w weryfikacji:** za Misję solo czekają na Weryfikatorów. Za Odbicie przychodzą od razu, ale w Rajdzie znikają, gdy Weryfikatorzy odrzucą zdjęcia „przed/po”.
+- **Dzienny limit Punktów** (Poziom 2).
+- **Prywatność:** zdjęcia Misji solo widzą tylko Weryfikatorzy i kasujemy je po sprawdzeniu. Zdjęcia „przed/po” z Rajdu pokazują samo miejsce: Weryfikatorzy sprawdzają, że nie ma na nich twarzy, i dopiero wtedy są publiczne. Profil pokazuje pseudonim, nie imię i nazwisko.
+
+## 5. Co dostaje miasto
+
+**Widok dla miasta:**
+- **Szare miejsca do naprawy przez miasto**, od najczęściej Potwierdzanych. To lista problemów sprawdzonych na miejscu przez ludzi, a nie skarg z kanapy.
+- Mapa Ligi dzielnic i najbardziej aktywne Huby.
+- Najaktywniejsi Organizatorzy w każdej dzielnicy (tylko ci, którzy się zgodzili).
+
+**Aktywność ma być informacją dla samorządu:** rada dzielnicy widzi, kto naprawdę działa, a nie kto najgłośniej mówi.
+
+## 6. Historia na demo
+
+Ola, 24 lata, nowa w Grzegórzkach: Zwiad (rura zamiast stojaka) → Misja grupowa w bibliotece (pomoc seniorom z telefonami, poznaje ludzi) → Rajd: sprzątanie skweru, Szare miejsce robi się zielone (Diament, Epicka Karta Rajdu) → nowa Ranga → Nagroda → dzielnica w górę Ligi → Widok dla miasta. Na żywo jury skanuje kod Misji grupowej w Hubie „Tauron Arena”.
 Szczegóły: [docs/demo-scenario.md](docs/demo-scenario.md).
-
-## 5. Pomysły, na których stoi projekt
-
-**Dwa typy postów.** *Potrzeba* (coś jest źle albo czegoś brakuje: od zepsutej latarni po samotnych seniorów) i *Inicjatywa* (pomysł albo działanie, które na nią odpowiada).
-
-**Poparcie zamiast duplikatów.** Zanim ktoś doda Potrzebę, widzi podobne w pobliżu i może kliknąć „Popieram”. Liczba Poparć mówi, co jest najważniejsze.
-
-**Trzech Pomocników.** Każda Potrzeba dostaje propozycje:
-- **Jednostka miejska**: urząd, który za to odpowiada. Bierze się ze stałej tabeli, AI go nie zgaduje.
-- **Organizacja**: NGO, klub, grupa parafialna.
-- **Sprawdzone rozwiązanie**: karta z 6 polami (problem, co zrobiono, gdzie, kto, koszt i czas, **źródło**). Bez źródła karta nie wchodzi.
-
-**Papiery pisze AI, ale ich nie omija.** Organizacja nie postawi ławki na miejskim terenie bez zgody miasta. Istnieje jednak procedura **Inicjatywy lokalnej**: mieszkańcy (sami albo przez NGO) składają wniosek i robią coś razem z miastem. Miasto samo podaje montaż ławek jako przykład, a wnioski przyjmuje przez cały rok. AI składa szkic takiego wniosku z Potrzeby, komentarzy i Poparć.
-
-**Zaufanie z faktów, nie z gwiazdek.** Organizacja ma **Dorobek**: liczbę Inicjatyw, które mieszkańcy potwierdzili jako zrobione. Potrzebę jako „Rozwiązaną” potwierdzają mieszkańcy, nie sama organizacja. Organizacja z numerem KRS dostaje znaczek „Zweryfikowana”. Sprawdzamy to w publicznym API rejestru KRS: jest darmowe i przetestowane.
-
-**Zagrożenie osobno od tematu.** Każda Potrzeba ma *Kategorię* (czego dotyczy) i *Poziom zagrożenia* (Brak / Utrudnienie / Zagrożenie). Otwarta studzienka jest wyżej niż ładna ławka z 50 Poparciami. AI proponuje poziom, mieszkańcy mogą go podnieść, obniżyć może tylko moderator. Zagrożenie życia (pożar, gaz, ranny) to **Alarm**: aplikacja nie wrzuca go do kolejki, tylko każe dzwonić na 112.
-
-**Prywatność od pierwszego kroku.** Każde zdjęcie jest najpierw automatycznie rozmywane na naszym serwerze (twarze i tablice, narzędzie EgoBlur od Meta). Dopiero rozmyta wersja trafia do AI. Oryginał jest od razu kasowany. **Żadna twarz nie trafia do Google ani Anthropic.**
-
-**AI tylko proponuje.** AI może zasugerować lepszy tytuł albo kategorię, ale nic nie zmienia bez zgody mieszkańca.
-
-## 6. Czego świadomie nie robimy
-
-- **Nie udajemy integracji z urzędami.** Urzędy nie mają kont; pokazujemy, który odpowiada i jak się z nim skontaktować.
-- **Nie ma ocen gwiazdkowych** organizacji.
-- **Nie ma aplikacji w sklepie.** Robimy jedną PWA: stronę, którą można dodać do ekranu telefonu jak aplikację.
-- **Nie ma osobnego kanału o inwestycjach.** Rozmowa toczy się pod Potrzebami i Inicjatywami.
-- **Nie obsługujemy zgłoszeń alarmowych.** Od tego jest 112.
 
 ## 7. Jak jury nas oceni
 
-Ogólne kryteria HackYeah (zadanie HubMI.pl może mieć własne, sprawdzamy na miejscu):
-
 | Kryterium | Waga | Nasz atut |
 |---|---|---|
-| Pomysł i innowacyjność | 30% | pętla „Inicjatywa → Sprawdzone rozwiązanie”, AI piszące wniosek |
-| Związek z zadaniem | 20% | każda z pięciu potrzeb HubMI.pl ma odpowiedź (tabela w pkt 3) |
-| Praktyczna użyteczność | 20% | prawdziwa procedura miasta, publiczny rejestr KRS, model biznesowy |
-| Design | 20% | React + gotowe komponenty, mapa, demo na telefonie |
-| Kompletność | 10% | działająca droga od Potrzeby do mapy |
+| Pomysł i innowacyjność | 30% | gra jak Pokémon Go, ale Punkty tylko za prawdziwe działania; „nie da się poprzeć z kanapy”; szara mapa robi się zielona; Liga dzielnic na 1000 mieszkańców |
+| Związek z zadaniem | 20% | Huby to miejskie przestrzenie, które lepiej wykorzystujemy; Szare miejsca i Widok dla miasta = komunikacja mieszkańcy ↔ instytucje |
+| Praktyczna użyteczność | 20% | działa na telefonie z linku; ochrona przed oszustwem; Sponsorzy płacą Nagrodami |
+| Design | 20% | szara → zielona mapa, Karta Rajdu „przed/po”, Odznaki, Liga. Mile widziane: duży kontrast, duży tekst, lista obok mapy (dostępność) |
+| Kompletność | 10% | cała historia Oli działa od początku do końca |
 
-**Model biznesowy:** dla mieszkańców i organizacji za darmo. Start: pilotaż w jednej dzielnicy za grant. Potem abonament płacony przez miasto albo rady dzielnic, które dostają mapę Potrzeb i gotowe szkice wniosków.
+**Model biznesowy (pitch):** dla Graczy za darmo. Sponsorzy płacą Nagrodami za ruch i reklamę. Miasto płaci za Widok dla miasta (potwierdzone problemy i dane o aktywności w dzielnicach). Slajd z kosztem utrzymania.
 
 ## 8. Kto co robi
 
-| Osoba | Zadanie na hackathonie |
-|---|---|
-| **Gabriel** | lider techniczny: baza (Supabase, wyszukiwanie w promieniu), dane przykładowe, wdrożenie |
-| **Patryk** | frontend: React + TypeScript + Leaflet, wszystkie ekrany, mapa, PWA |
-| **Kacper** | droga zdjęcia (wysyłka → rozmycie → zapis), potem frontend z Patrykiem |
-| **Szymon** | backend (FastAPI): Poparcia, Komentarze, Inicjatywy, Oferty, statusy |
-| **Tomasz** | funkcje AI: sortowanie, podobne Potrzeby, karty rozwiązań, Podsumowanie dyskusji, szkic wniosku |
-| **Eryk** | pitch, historia demo, model biznesowy, rozmowa ze stoiskiem HubMI.pl, testy „jak mieszkaniec”, README |
+| Zespół | Osoba | Zadanie |
+|---|---|---|
+| Techniczny | **Gabriel** | baza, Punkty i Liga, dane przykładowe, hosting |
+| Techniczny | **Szymon** | serwer: Zwiady, Misje, Rajdy, Odbicia, Punkty, Weryfikacja, Widok dla miasta |
+| Techniczny | **Patryk** | aplikacja: wszystkie ekrany, mapa, aparat, skaner kodu |
+| Psychologiczny | **Eryk, Tomasz, Kacper** | zasady gry (Punkty, poziomy Trudności, progi Rang, lista Odznak), lista Misji, tematy Sezonów, 3 Sponsorzy, nazwy, PDF 10 slajdów, pitch, test z ludźmi na hali |
 
-**Technologie:** React + TypeScript + Leaflet · FastAPI (Python) · Supabase (baza z mapami, logowanie, zdjęcia) · serwer z Linuxem · model AI wybrany po teście (Gemini Flash albo Claude).
+## 9. Technologie i plan
 
-## 9. Co dalej
+Technologie wybiera zespół techniczny, dokumenty się do nich dostosowują ([ADR 0009](docs/adr/0009-tech-team-owns-the-stack.md)). Teraz: `SiteQuestTeam/App` (Expo) i `SiteQuestTeam/Backend` (NestJS). Jedyny warunek: jury otwiera aplikację z linku na swoim telefonie. Bez AI w podstawowej wersji.
+**Wszystkie Punkty liczy serwer, nigdy telefon.**
+Kolejne kroki: [docs/event-plan.md](docs/event-plan.md). Co budujemy, a co tylko w pitchu: [docs/scope.md](docs/scope.md).
 
-- **Przed wyjazdem** (czwartek–piątek): [docs/pre-event-tasks.md](docs/pre-event-tasks.md). Każdy robi **5 zdjęć prawdziwych problemów** do danych przykładowych.
-- **Na hackathonie, krok po kroku:** [docs/event-plan.md](docs/event-plan.md).
-- **Co budujemy, a co tylko w pitchu:** [docs/scope.md](docs/scope.md).
-- **Do omówienia w zespole:** [docs/open-questions.md](docs/open-questions.md).
+## 10. Co oddajemy
 
-## Słowniczek i decyzje
+Obowiązkowo: tytuł, nazwa zespołu, lista członków, opis projektu, **PDF max 10 slajdów**. Opcjonalnie: repozytorium, link do demo, zrzuty ekranu, film.
+**PDF musi się bronić bez nas**: w etapie 1 mentorzy czytają go sami. Pitch na żywo dopiero w finale.
 
-- [CONTEXT.md](CONTEXT.md): wszystkie pojęcia (Potrzeba, Poparcie, Dorobek…) z polskimi nazwami do aplikacji. Używajmy tych słów w kodzie i na pitchu.
-- [docs/grilling-decisions.md](docs/grilling-decisions.md): lista wszystkich ustaleń.
-- [docs/adr/](docs/adr/): większe decyzje z uzasadnieniem.
+## 11. Zasady HackYeah, o których pamiętamy
 
-## Zasady HackYeah, o których pamiętamy
+- AI wolno używać, ale trzeba to podać. W README sekcja „Użycie AI”.
+- Musimy umieć wyjaśnić każdą decyzję techniczną, także kod napisany z AI.
+- Repozytorium publiczne: klucze tylko w `.env` (w `.gitignore`).
+- Oddzielamy pracę z hackathonu od rzeczy zrobionych wcześniej.
 
-- **AI wolno używać, ale trzeba to podać.** W README będzie sekcja „Użycie AI”. Pomysł musi być nasz.
-- **Repozytorium musi być publiczne.** Klucze API tylko w `.env`, nigdy w kodzie.
+## 12. Otwarte sprawy
 
----
+Żadna nie blokuje budowy:
+- Gildia: jak działa naprawdę (konta, które organizacje). Na demo tylko etykieta.
+- Nazwa dla znajomych, ostateczne nazwy w grze: zespół psychologiczny.
+- Dokładne dane przykładowe, progi Rang, liczby Punktów, ile Punktów za każdy poziom Trudności, Sponsorzy: zespół psychologiczny + Gabriel.
+- Pytania do mentora PKO: platforma zgłoszeń (Challenge Rocket czy Hack Tribe) i godzina końca.
 
-**Źródła:** [zadania HackYeah 2026](https://hackyeah.pl/tasks-prizes) · [regulamin](https://hackyeah.pl/rules?lang=en) · [AI na HackYeah](https://hackyeah.pl/news/how-to-use-ai-responsibly-at-a-hackathon-uxv05) · [Inicjatywa lokalna w Krakowie](https://www.krakow.pl/aktualnosci/278957,26,komunikat,zglos_projekt_w_ramach_inicjatywy_lokalnej.html) · [baza organizacji ngo.krakow.pl](https://ngo.krakow.pl/2911,ma,0,artykul,organizacje_pozarzadowe.html) · [aplikacja mKraków](https://www.krakow.pl/282944,artykul,o-aplikacji-mkrakow.html) · [EgoBlur](https://github.com/facebookresearch/EgoBlur)
+Wszystkie decyzje z grillowania: [docs/grill-smart-city.md](docs/grill-smart-city.md).
