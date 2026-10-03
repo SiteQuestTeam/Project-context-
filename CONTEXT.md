@@ -1,0 +1,145 @@
+# SideQuest
+
+An app, like Pokémon Go but for social action, in which residents of Kraków (mostly young adults) propose Initiatives for their neighbourhood, support other people's Initiatives on the spot, and earn Points they spend on Rewards. Built for the Smart City task at HackYeah 2026. The app speaks Polish; the Polish name of each term is given in brackets.
+
+The MVP terms come first. The game terms (Scouting, Quest, Raid…) are kept at the end under "Later": they are not part of the MVP and come back only if there is time. The old HubMI glossary (Need, Helper, Application draft…) is in git history.
+
+## People
+
+**Player** (Gracz):
+Any signed-in person who proposes Initiatives and gives Votes. The app is designed for young adults, but anyone can play.
+_Avoid_: user, resident, volunteer
+
+**Initiator** (Inicjator):
+The Player who proposed an Initiative.
+_Avoid_: author, owner, reporter
+
+**Avatar** (Awatar):
+The Player's figure on the map, at their real GPS position. Initiatives near the Avatar can be voted on.
+_Avoid_: marker, pin, character
+
+## Initiatives
+
+**Initiative** (Inicjatywa):
+A Player's proposal to change something in the neighbourhood, e.g. "a bike rack at the library entrance". Proposed on the spot with a Live photo, described in a Brief, and shown on the map, where other Players support it with Votes. It is "Collecting votes" (Zbiera głosy) until it reaches the Threshold, then "Passed" (Przeszła) and goes to whoever the Brief says fixes it.
+_Avoid_: project, idea, issue, report, need, potrzeba, wniosek
+
+**Threshold** (Próg):
+The number of Votes at which an Initiative passes. The same for every Initiative (10 in the demo).
+_Avoid_: goal, quorum, limit
+
+**Brief** (Brief):
+The short description of an Initiative: title, category, the problem, the proposed action, why it matters, the resources needed (people, tools, transport) and Who fixes. The AI drafts it from the Live photo and at most three questions to the Player; the Player edits and accepts it before the Initiative is published. It never contains examples from other cities or anything else the AI cannot see or be told.
+_Avoid_: form, application, SWOT, summary
+
+**Live photo** (Zdjęcie na żywo):
+A photo taken with the app's own camera, on the spot (GPS within about 50 m), with the time recorded; a photo from the gallery is never accepted.
+_Avoid_: upload, picture
+
+**Who fixes** (Kto naprawi):
+The part of a Brief saying who can carry out the Initiative: the City (its land or equipment, or it needs the city's consent or money), a Guild (special skills or tools), or Players. Decided by two yes/no questions in that order; the AI suggests the answers and the Player confirms them.
+_Avoid_: owner, assignee, responsible
+
+**Guild** (Gildia):
+An umbrella name for organisations with skills a normal Player lacks, e.g. craftspeople who can weld a bike rack, NGOs, firms.
+_Avoid_: company, contractor, partner
+
+**Vote** (Głos):
+A Player's support for an Initiative ("I back this idea"), given only on the spot, within about 50 m of the Initiative. One Vote per Player per Initiative. It cannot be given from a distance.
+_Avoid_: like, upvote, poparcie, confirmation
+
+## Status
+
+**Points** (Punkty):
+What a Player earns for proposing an Initiative (many) and for giving a Vote (few), plus a bonus for the Initiator and every Player who voted when the Initiative passes. A Player spends Points on Rewards. Nothing done only inside the app (liking, inviting, signing up) earns Points.
+_Avoid_: XP, score, coins, credits, kredyty
+
+**Rank** (Ranga):
+A Player's single level, reached at set thresholds of all Points ever earned. Spending Points never lowers it. It gives credibility (others can see this Player really acts), never power over other Players or decisions.
+_Avoid_: level, role, permission
+
+**Reward** (Nagroda):
+Something a Player gets by spending Points: either real, from a Sponsor (e.g. a free coffee), or cosmetic (a title such as "District Animator", an avatar frame).
+_Avoid_: prize, voucher, perk
+
+**Sponsor** (Sponsor):
+A local business that offers Rewards.
+_Avoid_: partner, advertiser
+
+## Later (not in the MVP)
+
+**Completed Initiative** (Zrealizowana inicjatywa):
+A passed Initiative that has really been carried out, shown on the profiles of its Initiator and voters, not on the map.
+_Avoid_: done, closed, finished
+
+**Organiser** (Organizator):
+The Player who created a group Quest or a Raid and shows its Check-in code on the spot.
+_Avoid_: leader, host, admin
+
+**Scouting** (Zwiad):
+A visit to a problem spot to record it with a Live photo. Passive: the Player only shows the problem, someone else fixes it. Creates a Grey spot.
+_Avoid_: report, ticket, zgłoszenie
+
+**Quest** (Misja):
+An action that helps people or the neighbourhood without changing a place, done solo or in a group, e.g. helping seniors set up their phones at a library.
+_Avoid_: task, challenge, zadanie
+
+**Raid** (Rajd):
+A group action that changes a place, proven by "before" and "after" photos of it, e.g. "Saturday 10:00–13:00, clean the square, at least 8 people".
+_Avoid_: event, meetup, wydarzenie
+
+**Role** (Rola):
+A job inside a group action with a number of places, e.g. "driver 0/1".
+_Avoid_: position, slot, function
+
+**Grey spot** (Szare miejsce):
+A place on the map with a recorded problem. It turns green when an "after" Live photo shows the problem is gone.
+_Avoid_: issue, need, potrzeba, usterka
+
+**Confirmation** (Potwierdzenie):
+Another Player's visit to an existing Grey spot with their own Live photo, showing the problem is still there. Not the same as a Vote, which backs an idea.
+_Avoid_: upvote, support, like
+
+**Difficulty** (Trudność):
+How demanding an action is, on five levels worked out by the app: Copper, Silver, Gold, Platinum, Diamond. A higher level earns more Points.
+_Avoid_: level, tier, rank
+
+**Hub** (Hub):
+A real public place in the city where group actions can meet: a library, a culture centre, a park.
+_Avoid_: location, spot, place
+
+**Check-in** (Odbicie):
+A Player's proof of being at a group action: scanning the code the Organiser shows, while the phone is near the place.
+_Avoid_: attendance, confirmation
+
+**Badge** (Odznaka):
+A mark for a specific achievement, shown on the Player's profile.
+_Avoid_: achievement, trophy, medal
+
+**History** (Historia):
+The list on a Player's profile of every action they took part in.
+_Avoid_: log, timeline, feed
+
+**Home district** (Dzielnica):
+The one of Kraków's 18 districts a Player picks at sign-up.
+_Avoid_: area, neighbourhood, zone
+
+**District league** (Liga dzielnic):
+The ranking of Kraków's districts by confirmed action hours per 1,000 residents, reset every monthly Season.
+_Avoid_: leaderboard, ranking, tabela
+
+**Share card** (Karta do udostępnienia):
+A ready image of a new Badge, Rank or finished action that a Player can post to social media. Shows the nickname, never the real name.
+_Avoid_: post, screenshot
+
+**Reviewer** (Weryfikator):
+A Player of a top Rank who reviews Proofs, never people. Each Proof goes to three Reviewers and two must agree.
+_Avoid_: admin, moderator, judge
+
+**City view** (Widok dla miasta):
+What local government sees: problems the City must fix, sorted by support, and where people are most active.
+_Avoid_: admin panel, dashboard
+
+**Official** (Urzędnik):
+A person from the city or a district council who reads the City view. Does not play and has no power in the game.
+_Avoid_: admin, city user
