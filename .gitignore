@@ -1,4 +1,0 @@
-# Secrets: API keys live only here, never in the repo (the repo becomes public at HackYeah)
-.env
-.env.*
-!.env.example
