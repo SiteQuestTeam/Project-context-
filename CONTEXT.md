@@ -58,7 +58,7 @@ _Avoid_: Initiative, Brief, Vote, Threshold, Who fixes, Defect, Grey spot
 The official Kraków reporting channel used by SideQuest for City incidents. The Player never chooses the municipal department. SideQuest sends anonymous reports in the MVP and stores the returned KCK `incidentId`. Technical integration rules: [docs/kck-integration.md](docs/kck-integration.md).
 
 **Interest** (Zainteresowanie):
-A Player's report of a City incident that is already on the map, or of an Initiative that has already Passed, after the Player confirms it is the same one. It is not sent to KCK, so the City gets no duplicate. It earns fewer Points than a new report, once per Player per City incident or Initiative, and puts it in the Player's History. For an Initiative still collecting votes the Player gives a Vote instead.
+A Player's honest answer "this is the same one" when the app shows a City incident that someone has already sent to KCK nearby (within about 50 m, same KCK category). City incidents are never shown on the map, because nobody votes on them: the app shows one only after a Player takes the Live photo of a new report there. An Interest is not sent to KCK, so the City gets no duplicate. It earns fewer Points than the first report, once per Player per City incident, and puts it in the Player's History. If the Player says "a different one", the report goes to KCK as new, even if it is in fact a duplicate. Initiatives never get Interest: a Player gives a Vote instead.
 _Avoid_: duplicate, like, confirmation
 
 **History** (Historia):
@@ -68,7 +68,7 @@ _Avoid_: log, timeline, feed
 ## Status
 
 **Points** (Punkty):
-What a Player earns for real civic action: proposing an Initiative (many), giving a Vote (few), successfully submitting a City incident to KCK, and showing Interest in a City incident or a passed Initiative (few). A City incident earns Points only after KCK accepts it and returns an `incidentId`; preparing a draft or a failed/unconfirmed submission earns nothing. The Initiator and every Player who voted also receive a bonus when an Initiative passes. A Player spends Points on Rewards. Nothing done only inside the app (liking, inviting, signing up) earns Points, and neither does reporting a Possible danger.
+What a Player earns for real civic action: proposing an Initiative (many), giving a Vote (few), successfully submitting a City incident to KCK (the first report), and showing Interest in a City incident (few). A City incident earns Points only after KCK accepts it and returns an `incidentId`; preparing a draft or a failed/unconfirmed submission earns nothing. The Initiator and every Player who voted also receive a bonus when an Initiative passes. A Player spends Points on Rewards. Nothing done only inside the app (liking, inviting, signing up) earns Points, and neither does reporting a Possible danger.
 _Avoid_: XP, score, coins, credits, kredyty
 
 **Rank** (Ranga):
@@ -86,7 +86,7 @@ _Avoid_: partner, advertiser
 ## Later (not in the MVP)
 
 **Completed Initiative** (Zrealizowana inicjatywa):
-A passed Initiative that has really been carried out, shown on the profiles of its Initiator and voters, not on the map.
+A passed Initiative that has really been carried out, shown on the profiles of its Initiator and voters, not on the map. Pitch only: the Initiative has a case number with the City, SideQuest reads its status there, and when the City confirms it, the Initiator and voters get a bigger bonus.
 _Avoid_: done, closed, finished
 
 **Guild** (Gildia):

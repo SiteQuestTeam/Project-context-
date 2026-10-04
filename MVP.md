@@ -34,8 +34,8 @@ Najpierw dowozimy 4 rzeczy, potem je upiększamy.
 
 ### 🗺️ Strumień 1: Aplikacja (mapa i ekrany)
 
-- [ ] **1.1 Mapa i Awatar:** mapa na cały ekran, Awatar w pozycji GPS, okrąg ok. 50 m wokół Awatara.
-- [ ] **1.2 Pinezki:** pobranie listy, pinezka w kolorze statusu (Inicjatywa: „Zbiera głosy” / „Przeszła”, Usterka: wysłana do KCK, z numerem zgłoszenia), podgląd (Brief + licznik `9/10` przy Inicjatywie).
+- [ ] **1.1 Mapa i Awatar:** mapa na cały ekran, Awatar w pozycji GPS, okrąg ok. 50 m wokół Awatara. Na mapie są tylko Inicjatywy. Usterek nie ma na mapie, bo nikt na nie nie głosuje.
+- [ ] **1.2 Pinezki:** pobranie listy, pinezka w kolorze statusu (Inicjatywa: „Zbiera głosy” / „Przeszła”), podgląd (Brief + licznik `9/10` przy Inicjatywie).
 - [ ] **1.3 Głos:** przycisk `[ Oddaj Głos ]` aktywny tylko w promieniu 50 m. Licznik rośnie, Punkty dochodzą do salda.
 - [ ] **1.4 Zgłoszenie:** aparat (bez galerii) z linią „Co chcesz zgłosić?” → swipe Usterka/Inicjatywa → przy Inicjatywie 2 pytania z podpowiedziami → ekran Briefu do poprawy i zatwierdzenia. Usterka po swipie przechodzi do ekranu z zadania 1.6. Ekrany i stałe teksty: [ai/README.md](ai/README.md), [ai/stale-teksty.md](ai/stale-teksty.md).
 - [ ] **1.5 Portfel i Nagrody:** saldo Punktów, Ranga, lista Nagród od Sponsorów z ceną w Punktach, przycisk „Odbierz”.
@@ -43,9 +43,9 @@ Najpierw dowozimy 4 rzeczy, potem je upiększamy.
 
 ### 🧠 Strumień 2: Backend i AI
 
-- [ ] **2.1 Dane i API:** `Inicjatywy` (id, Inicjator, lat, lng, zdjęcie, Brief od AI, Brief po poprawkach, liczba Głosów, status), `Usterki` (`CityIncident` z [docs/kck-integration.md](docs/kck-integration.md)), `Zainteresowania` (Gracz, Usterka albo Inicjatywa — jedno na parę), `Głosy` (Gracz, Inicjatywa — jeden na parę), `Gracze` (pseudonim, saldo, suma Punktów do Rangi), `Nagrody`.
+- [ ] **2.1 Dane i API:** `Inicjatywy` (id, Inicjator, lat, lng, zdjęcie, jeden ostateczny Brief zatwierdzony przez Gracza, liczba Głosów, status), `Usterki` (`CityIncident` z [docs/kck-integration.md](docs/kck-integration.md)), `Zainteresowania` (Gracz, Usterka albo Inicjatywa — jedno na parę), `Głosy` (Gracz, Inicjatywa — jeden na parę), `Gracze` (pseudonim, saldo, suma Punktów do Rangi), `Nagrody`.
 - [ ] **2.2 Zasady na serwerze:** sprawdzenie 50 m przy Głosie i zgłoszeniu, jeden Głos na Gracza, Próg 10 → status „Przeszła” + premia, wydawanie Punktów na Nagrody.
-- [ ] **2.3 Endpoint AI:** dwa kroki z OpenAI **gpt-6.1-sol**, `effort: low` (Patryk ma opłacone API OpenAI; ok. $0.03–0.06 za zgłoszenie): (1) zdjęcie → zagrożenie, kontrola zdjęcia, typ i pytania, (2) Inicjatywa: odpowiedzi → Brief jako JSON; Usterka: osobny prompt KCK, jedno wywołanie → pola KCK albo `RETAKE`. Każde wywołanie: `store: false`, timeout 8 s, bez ponowień. Kod: repo [backend-ai](https://github.com/SiteQuestTeam/backend-ai); dla `POST /kck/prepare` jest funkcja `przygotujUsterkeKck`. Adres z GPS przez miejską usługę MSIP, tak jak w KCK (`AddressService`). **Awaria:** po ok. 8 s serwer oddaje gotowy Brief dla zdjęcia z demo. (Wpina Patryk.)
+- [ ] **2.3 Endpoint AI:** dwa kroki z OpenAI **gpt-6.1-sol**, `effort: low` (Patryk ma opłacone API OpenAI; ok. $0.03–0.06 za zgłoszenie): (1) zdjęcie → zagrożenie, kontrola zdjęcia, typ i pytania, (2) Inicjatywa: odpowiedzi → Brief jako JSON; Usterka: osobny prompt KCK, jedno wywołanie → pola KCK albo `RETAKE`. Każde wywołanie: `store: false`, timeout 8 s, bez ponowień. Kod: repo [backend-ai](https://github.com/SiteQuestTeam/backend-ai); dla `POST /kck/prepare` jest funkcja `przygotujUsterkeKck`. Adres z GPS przez miejską usługę MSIP, tak jak w KCK (`AddressService`). **Awaria:** po ok. 8 s aplikacja pokazuje Bobra z komunikatem „Przepraszamy, spróbuj później”.
 - [ ] **2.4 „Mózg AI”:** [ai/](ai/README.md): 2 prompty systemowe, 2 schematy JSON, przykłady, test na 10–20 zdjęciach. (Tomasz.) Badanie formularzy: [docs/research-ai-form.md](docs/research-ai-form.md).
 - [ ] **2.5 Dane przykładowe:** 3–4 Inicjatywy w Krakowie z gotowymi Briefami + **„Stoisko z gorącą herbatą na HackYeah 2026” przy Tauron Arenie z 9/10 Głosami** + 3 Sponsorzy z Nagrodami.
 - [ ] **2.6 Integracja KCK:** `POST /kck/prepare` i `POST /kck/submit`, klasyfikacja do 5 kategorii KCK, GPS → adres, anonimowy `multipart/form-data` do KCK (`dto` + `file`), zapis i zwrot `incidentId`; dopiero po potwierdzonym `incidentId` backend nalicza Graczowi Punkty za Usterkę, dokładnie raz. Implementacja według [docs/kck-integration.md](docs/kck-integration.md).
