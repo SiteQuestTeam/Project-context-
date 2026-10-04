@@ -21,7 +21,7 @@ _Avoid_: marker, pin, character
 ## Initiatives
 
 **Initiative** (Inicjatywa):
-A Player's proposal to change something in the neighbourhood, e.g. "a bike rack at the library entrance". Proposed on the spot with a Live photo, described in a Brief, and shown on the map, where other Players support it with Votes. It is "Collecting votes" (Zbiera głosy) until it reaches the Threshold, then "Passed" (Przeszła) and goes to whoever the Brief says fixes it.
+A Player's proposal to change something in the neighbourhood, e.g. "a bike rack at the library entrance". Proposed on the spot with a Live photo, described in a Brief, and shown on the map, where other Players support it with Votes. It is "Collecting votes" (Zbiera głosy) until it reaches the Threshold, then "Passed" (Przeszła) and goes to whoever the Brief says fixes it. Not a City incident: a City incident needs repairing, not a vote. Never on private land (a house, garden, shop or firm); a housing cooperative's or a parish's yard is fine.
 _Avoid_: project, idea, issue, report, need, potrzeba, wniosek
 
 **Threshold** (Próg):
@@ -29,38 +29,46 @@ The number of Votes at which an Initiative passes. The same for every Initiative
 _Avoid_: goal, quorum, limit
 
 **Brief** (Brief):
-The short description of an Initiative: title, category, the problem, the proposed action, why it matters, the resources needed (people, tools, transport) and Who fixes. The AI drafts it from the Live photo and at most three questions to the Player; the Player edits and accepts it before the Initiative is published. It never contains examples from other cities or anything else the AI cannot see or be told.
+The short description of an Initiative: title, category (one of the nine categories of Kraków's Civic Budget), the problem, the proposed action, why it matters, the resources needed (people, tools, transport) and Who fixes; the AI asks at most two questions (the concrete action, the resources), each with a "why I ask" line and suggested answers that only fill in details of the Player's own idea. The Player edits and accepts the Brief before it is published. A City incident has no Brief: it has KCK report fields. It never contains examples from other cities or anything else the AI cannot see or be told.
 _Avoid_: form, application, SWOT, summary
 
 **Live photo** (Zdjęcie na żywo):
-A photo taken with the app's own camera, on the spot (GPS within about 50 m), with the time recorded; a photo from the gallery is never accepted.
+A photo taken with the app's own camera, on the spot (GPS within about 50 m), with the time recorded; a photo from the gallery is never accepted. A new photo is needed when a face is its main subject or a licence plate is readable; passers-by in the background are fine, because the law allows showing a person who is only a detail of a larger whole (art. 81 of the Polish copyright act).
 _Avoid_: upload, picture
 
 **Who fixes** (Kto naprawi):
-The part of a Brief saying who can carry out the Initiative: the City (its land or equipment, or it needs the city's consent or money), a Guild (special skills or tools), or Players. Decided by two yes/no questions in that order; the AI suggests the answers and the Player confirms them.
+The part of an Initiative's Brief saying who can carry out the Initiative: the City (its land or equipment, or it needs the city's consent or money) or Players. Decided by one yes/no question; the AI suggests the answer with a reason and the Player confirms it.
 _Avoid_: owner, assignee, responsible
-
-**Guild** (Gildia):
-An umbrella name for organisations with skills a normal Player lacks, e.g. craftspeople who can weld a bike rack, NGOs, firms.
-_Avoid_: company, contractor, partner
 
 **Vote** (Głos):
 A Player's support for an Initiative ("I back this idea"), given only on the spot, within about 50 m of the Initiative. One Vote per Player per Initiative. It cannot be given from a distance.
 _Avoid_: like, upvote, poparcie, confirmation
 
+**Possible danger** (Możliwe zagrożenie):
+A warning the AI gives when a Live photo (or the Player's words) shows a concrete sign that someone may get hurt now: fire, smoke, an injured person, an accident, something collapsing, a broken, fallen, sparking or low-hanging wire, or a smell of gas the Player mentions. Overhead tram and power lines high above the street are not one. The app shows what the AI saw and asks whether it is really happening: if the Player confirms, the report ends with the advice to move away and call 112; if not, the report goes on, because the AI can be wrong.
+_Avoid_: emergency, alert, alarm
+
 ## City incidents and KCK
 
 **City incident** (Usterka):
-An existing municipal fault that should be handled by the City, e.g. a pothole, damaged pavement, broken street equipment, pollution, greenery problem or animal-related issue. It is **not an Initiative** and does not collect Votes. In the MVP all City incidents are prepared in SideQuest and sent to Krakowskie Centrum Kontaktu (KCK) only after the Player reviews the generated data and explicitly taps “Wyślij do KCK”. SideQuest uses the Live photo and GPS; AI proposes one of five KCK categories, a title and a short description; the address is derived from GPS.
-_Avoid_: Initiative, Brief, Vote, Threshold, Who fixes
+An existing municipal fault that should be handled by the City, e.g. a pothole, damaged pavement, broken street equipment, pollution, greenery problem or animal-related issue. It is **not an Initiative** and does not collect Votes. After the Live photo the AI suggests whether it sees a City incident or an Initiative, with a reason, and the Player confirms it; when the AI is sure it sees a City incident, the Player cannot turn it into an Initiative, unless the Player proposes a change bigger than a repair (e.g. "a new pavement along the whole street"). For a City incident the AI asks no questions: it proposes one of five KCK categories, a title (`summary`, up to 60 characters) and a short description (`description`, up to 500); the address is derived from GPS. In the MVP all City incidents are prepared in SideQuest and sent to Krakowskie Centrum Kontaktu (KCK) only after the Player reviews the generated data and explicitly taps “Wyślij do KCK”.
+_Avoid_: Initiative, Brief, Vote, Threshold, Who fixes, Defect, Grey spot
 
 **KCK** (Krakowskie Centrum Kontaktu):
 The official Kraków reporting channel used by SideQuest for City incidents. The Player never chooses the municipal department. SideQuest sends anonymous reports in the MVP and stores the returned KCK `incidentId`. Technical integration rules: [docs/kck-integration.md](docs/kck-integration.md).
 
+**Interest** (Zainteresowanie):
+A Player's report of a City incident that is already on the map, or of an Initiative that has already Passed, after the Player confirms it is the same one. It is not sent to KCK, so the City gets no duplicate. It earns fewer Points than a new report, once per Player per City incident or Initiative, and puts it in the Player's History. For an Initiative still collecting votes the Player gives a Vote instead.
+_Avoid_: duplicate, like, confirmation
+
+**History** (Historia):
+The list on a Player's profile of their own Initiatives and City incidents (with the KCK number), including those they showed Interest in, each with its status.
+_Avoid_: log, timeline, feed
+
 ## Status
 
 **Points** (Punkty):
-What a Player earns for real civic action: proposing an Initiative (many), giving a Vote (few), and successfully submitting a City incident to KCK. A City incident earns Points only after KCK accepts it and returns an `incidentId`; preparing a draft or a failed/unconfirmed submission earns nothing. The Initiator and every Player who voted also receive a bonus when an Initiative passes. A Player spends Points on Rewards. Nothing done only inside the app (liking, inviting, signing up) earns Points.
+What a Player earns for real civic action: proposing an Initiative (many), giving a Vote (few), successfully submitting a City incident to KCK, and showing Interest in a City incident or a passed Initiative (few). A City incident earns Points only after KCK accepts it and returns an `incidentId`; preparing a draft or a failed/unconfirmed submission earns nothing. The Initiator and every Player who voted also receive a bonus when an Initiative passes. A Player spends Points on Rewards. Nothing done only inside the app (liking, inviting, signing up) earns Points.
 _Avoid_: XP, score, coins, credits, kredyty
 
 **Rank** (Ranga):
@@ -81,12 +89,16 @@ _Avoid_: partner, advertiser
 A passed Initiative that has really been carried out, shown on the profiles of its Initiator and voters, not on the map.
 _Avoid_: done, closed, finished
 
+**Guild** (Gildia):
+An umbrella name for organisations with skills a normal Player lacks, e.g. craftspeople who can weld a bike rack, NGOs, firms. Would come back as a third answer to Who fixes.
+_Avoid_: company, contractor, partner
+
 **Organiser** (Organizator):
 The Player who created a group Quest or a Raid and shows its Check-in code on the spot.
 _Avoid_: leader, host, admin
 
 **Scouting** (Zwiad):
-A visit to a problem spot to record it with a Live photo. Passive: the Player only shows the problem, someone else fixes it. Creates a Grey spot.
+A visit to a problem spot to record it with a Live photo. Passive: the Player only shows the problem, someone else fixes it. Creates a City incident.
 _Avoid_: report, ticket, zgłoszenie
 
 **Quest** (Misja):
@@ -100,14 +112,6 @@ _Avoid_: event, meetup, wydarzenie
 **Role** (Rola):
 A job inside a group action with a number of places, e.g. "driver 0/1".
 _Avoid_: position, slot, function
-
-**Grey spot** (Szare miejsce):
-A place on the map with a recorded problem. It turns green when an "after" Live photo shows the problem is gone.
-_Avoid_: issue, need, potrzeba, usterka
-
-**Confirmation** (Potwierdzenie):
-Another Player's visit to an existing Grey spot with their own Live photo, showing the problem is still there. Not the same as a Vote, which backs an idea.
-_Avoid_: upvote, support, like
 
 **Difficulty** (Trudność):
 How demanding an action is, on five levels worked out by the app: Copper, Silver, Gold, Platinum, Diamond. A higher level earns more Points.
@@ -124,10 +128,6 @@ _Avoid_: attendance, confirmation
 **Badge** (Odznaka):
 A mark for a specific achievement, shown on the Player's profile.
 _Avoid_: achievement, trophy, medal
-
-**History** (Historia):
-The list on a Player's profile of every action they took part in.
-_Avoid_: log, timeline, feed
 
 **Home district** (Dzielnica):
 The one of Kraków's 18 districts a Player picks at sign-up.
