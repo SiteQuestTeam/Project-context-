@@ -33,5 +33,5 @@ Teksty, które aplikacja pokazuje sama (nie AI), są w [stale-teksty.md](stale-t
 - **Odmowa:** gdy model odmówi, odpowiedź nie pasuje do schematu. Sprawdź to przed czytaniem JSON-a.
 - **Kto naprawi:** Miasto, gdy `who_fixes.city_needed` jest `true`, inaczej Gracze. Liczy serwer.
 - **Kategoria:** w kroku 1 serwer sprawdza, czy pasuje do typu (dwie listy są w opisie pola).
-- **Zapis:** zapisz Brief od AI i Brief po poprawkach Gracza. Różnice posłużą do lepszych przykładów w promptach.
+- **Zapis:** zapisz Brief od AI i Brief po poprawkach Gracza. Zapisz też `danger` z kroku 1 i odpowiedź Gracza „Nie, nic takiego tu nie ma”: zgłoszenie daje wtedy zwykłe Punkty, ale te przypadki można później sprawdzić. Różnice posłużą do lepszych przykładów w promptach.
 - **Punkty:** liczy tylko serwer. AI nigdy ich nie dostaje ani nie zwraca.

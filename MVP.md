@@ -20,7 +20,7 @@ Najpierw dowozimy 4 rzeczy, potem je upiększamy.
 - **Nie da się zagłosować z kanapy.** Głos i zgłoszenie tylko na miejscu (GPS ok. 50 m).
 - **Zdjęcie na żywo:** tylko aparat w aplikacji, bez galerii. Nowe zdjęcie, gdy twarz jest głównym tematem albo widać czytelną tablicę rejestracyjną. Przechodnie w tle są w porządku (art. 81 prawa autorskiego).
 - **Tylko miejsca publiczne.** Nie na prywatnej posesji. Podwórko osiedla albo parafii jest w porządku.
-- **Możliwe zagrożenie:** AI pokazuje ostrzeżenie (co wykryło) i pyta, czy to prawda. Tak: rada „odejdź i zadzwoń pod 112” i koniec zgłoszenia. Nie: zgłoszenie idzie dalej, bo AI może się pomylić.
+- **Możliwe zagrożenie:** AI pokazuje ostrzeżenie (co wykryło) i pyta, czy to prawda. Tak: „odejdź, nie dotykaj, ostrzeż ludzi”, przyciski `112` i (przy prądzie) `991`, koniec zgłoszenia, **zero Punktów**, żeby nikt nie podchodził do zagrożenia dla nagrody. Nie: zgłoszenie idzie dalej, bo AI może się pomylić. Przewrócony słup to zawsze zagrożenie.
 - **Punkty:** dużo za zgłoszenie Inicjatywy, coś za Usterkę przyjętą przez KCK, mało za Głos i za Zainteresowanie (zgłoszenie czegoś, co już jest na mapie; nie idzie do KCK). Gdy Inicjatywa przechodzi, premię dostają Inicjator i wszyscy, którzy na nią głosowali. Liczby ustala zespół psychologiczny.
 - **Ranga** liczy wszystkie Punkty zdobyte kiedykolwiek. Wydanie Punktów jej nie obniża.
 - **Wszystkie Punkty liczy serwer,** nigdy telefon. Za Usterkę Punkty są naliczane dokładnie raz dopiero po tym, gdy KCK przyjmie zgłoszenie i zwróci `incidentId`; przygotowanie szkicu, błąd lub niepotwierdzony timeout nie daje Punktów.
@@ -78,6 +78,7 @@ Najpierw dowozimy 4 rzeczy, potem je upiększamy.
 - Gra: Zwiady, Misje, Rajdy, Odbicia, Weryfikatorzy, Liga dzielnic, Odznaki.
 - Logowanie przez mObywatel. Punkty dopiero po weryfikacji (ochrona przed oszustwem). Zgłaszają tylko mieszkańcy.
 - Gildia jako trzecia odpowiedź Kto naprawi.
+- Znacznik „niebezpieczne miejsce” na mapie po potwierdzonym zagrożeniu, żeby ostrzec innych.
 - Teren prywatny sprawdzany po GPS na miejskiej mapie działek.
 - Status „Wykonane” po zdjęciu „po naprawie”. Takie przypadki uczą AI (lepsze przykłady w promptach).
 

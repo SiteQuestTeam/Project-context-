@@ -45,7 +45,7 @@ A Player's support for an Initiative ("I back this idea"), given only on the spo
 _Avoid_: like, upvote, poparcie, confirmation
 
 **Possible danger** (Możliwe zagrożenie):
-A warning the AI gives when a Live photo (or the Player's words) shows a concrete sign that someone may get hurt now: fire, smoke, an injured person, an accident, something collapsing, a broken, fallen, sparking or low-hanging wire, or a smell of gas the Player mentions. Overhead tram and power lines high above the street are not one. The app shows what the AI saw and asks whether it is really happening: if the Player confirms, the report ends with the advice to move away and call 112; if not, the report goes on, because the AI can be wrong.
+A warning the AI gives when a Live photo (or the Player's words) shows a concrete sign that someone may get hurt now: fire, smoke, an injured person, an accident, something collapsing, a broken, fallen, sparking or low-hanging wire, a fallen or badly leaning power or tram pole (even with no sparks and no visible wires), or a smell of gas the Player mentions. Overhead tram and power lines high above the street are not one. The app shows what the AI saw and asks whether it is really happening: if the Player confirms, the report ends with the advice to move away, not touch anything and warn people nearby, plus one-tap call buttons for 112 and, when electricity is involved, the power emergency line 991; if not, the report goes on, because the AI can be wrong. A Possible danger never earns Points or Badges, so nobody is rewarded for getting close to it.
 _Avoid_: emergency, alert, alarm
 
 ## City incidents and KCK
@@ -68,7 +68,7 @@ _Avoid_: log, timeline, feed
 ## Status
 
 **Points** (Punkty):
-What a Player earns for real civic action: proposing an Initiative (many), giving a Vote (few), successfully submitting a City incident to KCK, and showing Interest in a City incident or a passed Initiative (few). A City incident earns Points only after KCK accepts it and returns an `incidentId`; preparing a draft or a failed/unconfirmed submission earns nothing. The Initiator and every Player who voted also receive a bonus when an Initiative passes. A Player spends Points on Rewards. Nothing done only inside the app (liking, inviting, signing up) earns Points.
+What a Player earns for real civic action: proposing an Initiative (many), giving a Vote (few), successfully submitting a City incident to KCK, and showing Interest in a City incident or a passed Initiative (few). A City incident earns Points only after KCK accepts it and returns an `incidentId`; preparing a draft or a failed/unconfirmed submission earns nothing. The Initiator and every Player who voted also receive a bonus when an Initiative passes. A Player spends Points on Rewards. Nothing done only inside the app (liking, inviting, signing up) earns Points, and neither does reporting a Possible danger.
 _Avoid_: XP, score, coins, credits, kredyty
 
 **Rank** (Ranga):

@@ -14,7 +14,12 @@ Gdy `danger` nie jest `null`, aplikacja pokazuje ostrzeżenie i pyta Gracza. AI 
 
 - **„⚠️ AI widzi możliwe zagrożenie: {danger}”**
 - „Czy to naprawdę się dzieje?” `[ Tak, widzę to ]` `[ Nie, nic takiego tu nie ma ]`
-- Tak: „Odejdź od tego miejsca i zadzwoń pod 112. Tego nie zgłaszamy w SideQuest, bo tu potrzebne są służby ratunkowe.” **Rozmowa się kończy**, zgłoszenia nie ma.
+- Tak (bez pytania o odległość, każdy widzi to samo):
+  - „1. Odejdź na bezpieczną odległość. Nie dotykaj. Ostrzeż ludzi obok.”
+  - „2. Zadzwoń po pomoc. Tego nie zgłaszamy w SideQuest, bo tu potrzebne są służby ratunkowe.”
+  - `[ 📞 Zadzwoń pod 112 ]` (link `tel:112`), a przy `danger_kind: "energia"` także `[ ⚡ Pogotowie Energetyczne 991 ]` (link `tel:991`; numer dla sieci TAURON Dystrybucja, która obsługuje Kraków).
+  - „Za zgłoszenie zagrożenia nie ma Punktów. Twoje bezpieczeństwo jest ważniejsze niż zdjęcie.”
+  - **Rozmowa się kończy**, zgłoszenia nie ma.
 - Nie: „Dzięki. Idziemy dalej.” Rozmowa idzie dalej normalnie.
 
 ## Przechodnie na zdjęciu (pole `faces_in_background` z kroku 1)
