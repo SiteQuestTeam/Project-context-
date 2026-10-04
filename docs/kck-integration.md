@@ -390,6 +390,21 @@ async submitIncident(
 }
 ```
 
+## Przechowywanie zdjęć w SideQuest
+
+SideQuest **przechowuje Live photo Usterki we własnym storage**. Zdjęcie jest zapisywane podczas `POST /kck/prepare` po przejściu walidacji zdjęcia i pozostaje powiązane z rekordem `CityIncident`.
+
+`POST /kck/submit` **nie wymaga ponownego uploadu zdjęcia z telefonu**. Backend pobiera zapisany plik ze storage SideQuest i wysyła dokładnie ten plik do KCK jako pole `file`.
+
+Dzięki temu:
+
+- aplikacja ma własną historię zdjęć Usterek,
+- podgląd i wysyłka korzystają z tego samego Live photo,
+- retry po jednoznacznym błędzie nie wymaga ponownego robienia zdjęcia,
+- zdjęcie pozostaje dostępne razem z rekordem Usterki i `incidentId`.
+
+W MVP storage może być trwałym wolumenem backendu. Katalog danych musi być zamontowany jako persistent volume; pliki nie mogą żyć wyłącznie w efemerycznej warstwie kontenera. Przy przejściu na wiele instancji backendu storage należy zastąpić współdzielonym object storage bez zmiany kontraktu modułu KCK.
+
 ## Dane po stronie SideQuest
 
 Minimalny zapis:
