@@ -74,6 +74,10 @@ Przy każdym zgłoszeniu Gracz zaznacza pole:
 - Usterka (podgląd zgłoszenia do KCK, [docs/kck-integration.md](../docs/kck-integration.md)): „Sprawdź, czy dane są poprawne.” Pola: kategoria KCK, tytuł, opis, adres. `[ Popraw ]` `[ Wyślij do KCK ]`
 - Nazwy kategorii KCK: `DAMAGE` Uszkodzenia, `POLLUTION` Zanieczyszczenia i odory, `GREENERY` Zieleń, `ANIMALS` Zwierzęta, `OTHER` Pozostałe.
 
+## Usterka: `RETAKE` z promptu KCK
+
+`message` od AI i przycisk `[ Zrób nowe zdjęcie ]`. Gdy AI nie działa (timeout, błąd): „Nie udało się przygotować zgłoszenia automatycznie. Wpisz dane ręcznie.” i ręczne pola: kategoria, tytuł, opis.
+
 ## Po wysłaniu: Usterka
 
 Pokazujemy dopiero po otrzymaniu `incidentId` z KCK.
