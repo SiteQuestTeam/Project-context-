@@ -60,7 +60,7 @@ The official Kraków reporting channel used by SideQuest for City incidents. The
 ## Status
 
 **Points** (Punkty):
-What a Player earns for proposing an Initiative (many) and for giving a Vote (few), plus a bonus for the Initiator and every Player who voted when the Initiative passes. A Player spends Points on Rewards. Nothing done only inside the app (liking, inviting, signing up) earns Points.
+What a Player earns for real civic action: proposing an Initiative (many), giving a Vote (few), and successfully submitting a City incident to KCK. A City incident earns Points only after KCK accepts it and returns an `incidentId`; preparing a draft or a failed/unconfirmed submission earns nothing. The Initiator and every Player who voted also receive a bonus when an Initiative passes. A Player spends Points on Rewards. Nothing done only inside the app (liking, inviting, signing up) earns Points.
 _Avoid_: XP, score, coins, credits, kredyty
 
 **Rank** (Ranga):
