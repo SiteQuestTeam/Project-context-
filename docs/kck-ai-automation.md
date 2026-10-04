@@ -1,18 +1,17 @@
 # Automatyzacja Usterki z AI — KCK
 
-> Małe wytyczne tylko dla warstwy AI przygotowującej zgłoszenie Usterki do KCK.
+> Wytyczne dla warstwy AI przygotowującej zgłoszenie Usterki do KCK.
 >
 > Pełna integracja KCK: [kck-integration.md](kck-integration.md).
 
 ## Cel
 
-AI ma maksymalnie uprościć zgłoszenie Usterki. Gracz robi **Zdjęcie na żywo**, a backend automatycznie przygotowuje trzy pola:
+AI analizuje **Zdjęcie na żywo** i w jednym wywołaniu zwraca jeden z dwóch wyników:
 
-1. kategorię KCK,
-2. tytuł,
-3. krótki opis.
+- `OK` — na zdjęciu widać prawdziwą Usterkę; AI przygotowuje kategorię KCK, tytuł i opis,
+- `RETAKE` — zdjęcie nie nadaje się do zgłoszenia; aplikacja prosi Gracza o nowe zdjęcie.
 
-AI **nie wysyła zgłoszenia do KCK**. Wynik jest tylko propozycją, którą Gracz widzi i może poprawić przed kliknięciem **„Wyślij do KCK”**.
+AI **nie wysyła zgłoszenia do KCK**. Przy `OK` wynik jest propozycją, którą Gracz widzi i może poprawić przed kliknięciem **„Wyślij do KCK”**.
 
 ## Flow
 
@@ -21,62 +20,93 @@ Zdjęcie na żywo
       ↓
 SideQuest Backend
       ↓
-AI Vision
+przygotujZdjecie()
       ↓
-kategoria + tytuł + opis
+AI Vision — jedno wywołanie
       ↓
-walidacja JSON
-      ↓
-podgląd dla Gracza
-      ↓
+   ┌───────────────┐
+   │               │
+  OK            RETAKE
+   │               │
+   ↓               ↓
+kategoria       powód +
+tytuł           komunikat
+opis               │
+   │               ↓
+   ↓           nowe zdjęcie
+podgląd
+   ↓
 Gracz poprawia / akceptuje
-      ↓
+   ↓
 osobny flow wysyłki do KCK
 ```
 
 ## Wejście do AI
 
-Minimalne wejście:
+Moduł KCK przekazuje surowe zdjęcie:
 
 ```ts
-{
-  photo: Buffer
-}
+przygotujUsterkeKck(photo: Buffer, {
+  linia_gracza?: string,
+  kategoria?: KategoriaKck | null,
+})
 ```
 
-GPS i adres **nie powinny być wymyślane przez AI**. Są pobierane osobno przez aplikację i `AddressService`.
+Przed wysłaniem do modelu backend obraca zdjęcie zgodnie z EXIF, zmniejsza je maksymalnie do 1024 px po dłuższym boku i konwertuje do JPEG.
 
-## Oczekiwany wynik
+`linia_gracza` i wcześniejsza kategoria są tylko podpowiedzią. Usterka musi być widoczna na zdjęciu.
 
-AI musi zwracać wyłącznie JSON zgodny ze schematem:
+GPS i adres **nie są ustalane przez AI**. Obsługuje je osobno aplikacja / `AddressService`.
+
+## Wynik AI
+
+Publiczny wynik używany przez moduł KCK:
 
 ```ts
-type KckAiResult = {
-  category:
-    | 'DAMAGE'
-    | 'POLLUTION'
-    | 'GREENERY'
-    | 'ANIMALS'
-    | 'OTHER';
-
-  summary: string;
-  description: string;
-};
+type KckAiResult =
+  | {
+      status: 'OK';
+      category: 'DAMAGE' | 'POLLUTION' | 'GREENERY' | 'ANIMALS' | 'OTHER';
+      summary: string;
+      description: string;
+    }
+  | {
+      status: 'RETAKE';
+      reason:
+        | 'NO_INCIDENT'
+        | 'POOR_QUALITY'
+        | 'FACES_OR_PLATES'
+        | 'INAPPROPRIATE';
+      message: string;
+    };
 ```
 
-Przykład:
+### Przykład `OK`
 
 ```json
 {
+  "status": "OK",
   "category": "DAMAGE",
   "summary": "Uszkodzona nawierzchnia chodnika",
-  "description": "Na chodniku widoczne jest uszkodzenie nawierzchni, które może utrudniać bezpieczne przejście."
+  "description": "Na chodniku widoczne jest uszkodzenie nawierzchni."
 }
 ```
 
+### Przykład `RETAKE`
+
+```json
+{
+  "status": "RETAKE",
+  "reason": "NO_INCIDENT",
+  "message": "Nie widzę tu usterki. Zrób zdjęcie z bliska tego, co jest zepsute albo brudne."
+}
+```
+
+Model wewnętrznie zwraca JSON zgodny z `prompts/schema-kck.json`. Schemat wymaga wszystkich pól; pola niepasujące do danego statusu mają wartość `null`. Backend następnie zamienia ten wynik na powyższy typ `KckAiResult`.
+
 ## Kategorie
 
-AI może wybrać tylko jedną z pięciu kategorii:
+AI może zwrócić tylko jedną z pięciu kategorii:
 
 | Wartość | Znaczenie |
 |---|---|
@@ -86,79 +116,99 @@ AI może wybrać tylko jedną z pięciu kategorii:
 | `ANIMALS` | Zwierzęta |
 | `OTHER` | Pozostałe |
 
-Mapowanie na `serviceExternalId` wykonuje backend, nie model AI.
+`OTHER` oznacza **prawdziwą Usterkę**, która nie pasuje do czterech pozostałych kategorii.
+
+`OTHER` **nie jest fallbackiem dla niejasnego zdjęcia**. Jeżeli nie da się potwierdzić Usterki na zdjęciu, wynik powinien być `RETAKE`.
+
+Mapowanie kategorii na `serviceExternalId` wykonuje backend KCK, nie model AI.
+
+## RETAKE
+
+Dozwolone powody:
+
+| Powód | Kiedy |
+|---|---|
+| `NO_INCIDENT` | Na zdjęciu nie widać Usterki miejskiej |
+| `POOR_QUALITY` | Zdjęcie jest zbyt słabe, aby wiarygodnie rozpoznać problem |
+| `FACES_OR_PLATES` | Głównym elementem jest twarz / duża twarz albo czytelna tablica rejestracyjna |
+| `INAPPROPRIATE` | Treść jest obraźliwa albo nieprzyzwoita |
+
+Przy `RETAKE` AI zwraca krótki komunikat mówiący Graczowi, jak poprawić zdjęcie. Nie generuje wtedy kategorii, tytułu ani opisu zgłoszenia.
 
 ## Reguły promptu
 
-Model powinien dostać prostą instrukcję:
+Źródłem promptu jest:
 
 ```text
-Analizujesz zdjęcie usterki miejskiej z Krakowa.
-
-Na podstawie wyłącznie tego, co rzeczywiście widać na zdjęciu:
-1. wybierz jedną kategorię:
-   DAMAGE, POLLUTION, GREENERY, ANIMALS, OTHER
-2. utwórz krótki tytuł,
-3. utwórz krótki, rzeczowy opis.
-
-Nie wymyślaj:
-- adresu,
-- przyczyny problemu,
-- czasu powstania,
-- właściciela terenu,
-- odpowiedzialnego urzędu,
-- informacji, których nie można wywnioskować ze zdjęcia.
-
-Jeżeli zdjęcie jest niejednoznaczne, wybierz OTHER i opisz tylko to, co widać.
-
-Zwróć wyłącznie JSON zgodny ze schematem.
+prompts/prompt-kck.md
 ```
 
-## Walidacja po stronie backendu
+Najważniejsze reguły:
 
-Backend musi sprawdzić wynik AI przed pokazaniem go w aplikacji:
+- Usterka musi być rzeczywiście widoczna na zdjęciu.
+- AI nie wymyśla adresu, ulicy, przyczyny, czasu powstania, właściciela terenu ani odpowiedzialnego urzędu.
+- `kategoria_podpowiedz` jest tylko sugestią; zdjęcie ma pierwszeństwo.
+- `summary` opisuje problem, nie lokalizację.
+- `description` opisuje wyłącznie to, co można wiarygodnie wywnioskować ze zdjęcia.
+- AI pisze po polsku, krótko i rzeczowo.
+- Wynik musi być zgodny ze ścisłym JSON Schema.
 
-- `category` należy do 5 dozwolonych wartości,
-- `summary` nie jest pusty,
-- `description` nie jest pusty,
-- odpowiedź jest poprawnym JSON-em,
-- brak dodatkowych, nieoczekiwanych pól nie blokuje działania, ale nie są one używane.
+## Walidacja backendu
 
-Rekomendowane limity:
+Backend wykonuje twardą walidację wyniku.
+
+Dla `OK`:
 
 ```text
-summary     <= 60 znaków
-description <= 500 znaków
+category    = jedna z 5 kategorii KCK
+summary     = 1–60 znaków
+description = 1–500 znaków
 ```
+
+Jeżeli model złamie te reguły, wynik jest odrzucany jako błąd AI (`AiBlad`).
+
+Dla `RETAKE` wymagane są:
+
+```text
+retake_reason
+message
+```
+
+Brak któregoś z nich również oznacza błąd AI.
 
 ## Integracja z backendem
 
-AI jest wywoływane w:
+Funkcja przeznaczona dla modułu KCK:
 
-```http
-POST /kck/prepare
+```ts
+przygotujUsterkeKck(photo)
 ```
 
-Endpoint wykonuje równolegle:
+Docelowy flow `POST /kck/prepare`:
 
 ```text
-photo ───────→ AI ─────────→ category + summary + description
-latitude/lng → AddressService → street + number + zipCode
+photo ───────→ przygotujUsterkeKck() ─→ OK / RETAKE
+latitude/lng → AddressService ─────────→ street + number + zipCode
 ```
 
-Dopiero backend łączy oba wyniki w gotowy podgląd.
+Przy `OK` backend łączy wynik AI z adresem wyliczonym z GPS i zwraca podgląd zgłoszenia.
 
-## Fallback
+Przy `RETAKE` nie przygotowuje zgłoszenia do wysłania — aplikacja prosi o nowe zdjęcie.
 
-Jeżeli AI:
-- nie odpowie,
-- przekroczy timeout,
-- zwróci błędny JSON,
-- zwróci kategorię spoza listy,
+## Błąd AI i fallback
 
-to zgłoszenie nadal ma być możliwe.
+`RETAKE` **nie jest awarią AI**. Jest poprawnym wynikiem analizy zdjęcia.
 
-Frontend pokazuje wtedy ręczne pola:
+Fallback do ręcznych pól stosujemy dopiero, gdy AI faktycznie zawiedzie, np.:
+
+- timeout,
+- odmowa modelu,
+- niepełna odpowiedź,
+- niepoprawny JSON,
+- wynik niezgodny ze schematem,
+- złamanie twardych limitów.
+
+Wtedy Usterka nadal może zostać zgłoszona ręcznie:
 
 ```text
 Kategoria: [ wybierz ]
@@ -168,6 +218,19 @@ Opis:      [ ... ]
 
 Awaria AI **nie może blokować wysłania Usterki do KCK**.
 
+## Parametry wywołania AI
+
+Aktualna implementacja:
+
+- jedno wywołanie modelu dla Usterki,
+- Structured Output przez `json_schema`,
+- `strict: true`,
+- `store: false`,
+- domyślny timeout: **8 s**,
+- `maxRetries: 0`.
+
+Brak automatycznych ponowień utrzymuje przewidywalny czas odpowiedzi. Decyzja o ponowieniu należy do aplikacji.
+
 ## Ważne zasady
 
 - AI przygotowuje propozycję, nie podejmuje ostatecznej decyzji za Gracza.
@@ -175,5 +238,7 @@ Awaria AI **nie może blokować wysłania Usterki do KCK**.
 - AI nie nalicza Punktów.
 - AI nie określa adresu.
 - AI nie wybiera wydziału ani urzędu.
-- Klucz API modelu znajduje się wyłącznie na backendzie w `.env`.
-- Ostateczne dane zatwierdza Gracz przed wysłaniem.
+- `OTHER` nie zastępuje `RETAKE`.
+- `RETAKE` nie jest błędem technicznym.
+- Klucz API modelu znajduje się wyłącznie na backendzie.
+- Ostateczne dane `OK` zatwierdza Gracz przed wysłaniem.
