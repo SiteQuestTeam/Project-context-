@@ -427,6 +427,39 @@ FAILED
 
 KCK jest źródłem prawdy o dalszej obsłudze sprawy. SideQuest przechowuje przede wszystkim fakt przygotowania/wysłania i numer KCK.
 
+## Punkty za skuteczne zgłoszenie
+
+Przygotowanie szkicu usterki, analiza AI ani samo kliknięcie przycisku nie daje Punktów.
+
+**Punkty za Usterkę są naliczane dopiero po potwierdzonym przyjęciu zgłoszenia przez KCK**, czyli po otrzymaniu prawidłowego `incidentId`. Dzięki temu nagradzamy realne działanie wykonane poza samą aplikacją, a nie samo rozpoczęcie formularza.
+
+Zasada:
+
+```text
+PREPARED
+   ↓
+SUBMITTING
+   ↓
+KCK zwraca incidentId
+   ↓
+SUBMITTED
+   ↓
+naliczenie Punktów dokładnie raz
+```
+
+Nie naliczamy Punktów, gdy:
+- Gracz tylko przygotował lub edytował zgłoszenie,
+- KCK zwróciło błąd,
+- wysyłka została anulowana,
+- odpowiedź jest niejednoznaczna (np. timeout bez potwierdzonego `incidentId`),
+- ten sam `incidentId` lub to samo zgłoszenie zostało już wcześniej nagrodzone.
+
+Naliczanie odbywa się **wyłącznie po stronie backendu** i powinno być idempotentne. Rekord zgłoszenia powinien przechowywać informację, czy nagroda została już przyznana, np. `pointsGrantedAt` lub odpowiadający wpis w ledgerze Punktów.
+
+W MVP nie wprowadzamy osobnego XP. **Punkty są jedyną jednostką nagradzania**, a Ranga wynika z łącznej liczby Punktów zdobytych kiedykolwiek.
+
+Wysokość nagrody za skuteczne zgłoszenie Usterki jest konfigurowalna i nie należy jej hardcodować w aplikacji mobilnej.
+
 ## Ochrona przed podwójnym wysłaniem
 
 Po kliknięciu „Wyślij do KCK” przycisk jest blokowany do czasu odpowiedzi.
@@ -504,6 +537,8 @@ Integracja usterki z KCK jest gotowa, gdy:
 - [ ] DTO trafia jako pole `dto`,
 - [ ] sukces wymaga `incidentId`,
 - [ ] `incidentId` jest zapisany i pokazany Graczowi,
+- [ ] Punkty za Usterkę są naliczane po stronie serwera dokładnie raz i dopiero po otrzymaniu `incidentId`,
+- [ ] brak `incidentId` oznacza brak Punktów,
 - [ ] błędy AI, geocodingu i KCK mają bezpieczny fallback,
 - [ ] aplikacja nie tworzy celowo duplikatów.
 
