@@ -21,7 +21,7 @@ Najpierw dowozimy 4 rzeczy, potem je upiększamy.
 - **Zdjęcie na żywo:** tylko aparat w aplikacji, bez galerii.
 - **Punkty:** dużo za zgłoszenie Inicjatywy, mało za Głos. Gdy Inicjatywa przechodzi, premię dostają Inicjator i wszyscy, którzy na nią głosowali. Liczby ustala zespół psychologiczny.
 - **Ranga** liczy wszystkie Punkty zdobyte kiedykolwiek. Wydanie Punktów jej nie obniża.
-- **Wszystkie Punkty liczy serwer,** nigdy telefon.
+- **Wszystkie Punkty liczy serwer,** nigdy telefon. Za Usterkę Punkty są naliczane dokładnie raz dopiero po tym, gdy KCK przyjmie zgłoszenie i zwróci `incidentId`; przygotowanie szkicu, błąd lub niepotwierdzony timeout nie daje Punktów.
 - **Logowanie:** tylko pseudonim, bez hasła. W pitchu: w pełnej wersji mObywatel.
 - **Klucz API Claude tylko na serwerze** (w `.env`). Repo jest publiczne.
 - **Usterki miejskie są osobną ścieżką od Inicjatyw.** Typowe usterki (np. dziura, uszkodzony chodnik, zanieczyszczenie, problem z zielenią lub zwierzętami) wysyłamy wyłącznie do Krakowskiego Centrum Kontaktu. Gracz nie wybiera wydziału ani „Kto naprawi”. Szczegóły: [docs/kck-integration.md](docs/kck-integration.md).
@@ -46,7 +46,7 @@ Najpierw dowozimy 4 rzeczy, potem je upiększamy.
 - [ ] **2.3 Endpoint AI:** zdjęcie + odpowiedzi Gracza → Claude **Sonnet 5.5** → Brief jako JSON. **Awaria:** po ok. 8 s serwer oddaje gotowy Brief dla zdjęcia z demo. (Wpina Patryk.)
 - [ ] **2.4 „Mózg AI”:** prompt systemowy, `schema.json` Briefu, przykłady rozmów, test na 10–20 zdjęciach. (Tomasz.) Badanie formularzy: [docs/research-ai-form.md](docs/research-ai-form.md).
 - [ ] **2.5 Dane przykładowe:** 3–4 Inicjatywy w Krakowie z gotowymi Briefami + **„Stoisko z gorącą herbatą na HackYeah 2026” przy Tauron Arenie z 9/10 Głosami** + 3 Sponsorzy z Nagrodami.
-- [ ] **2.6 Integracja KCK:** `POST /kck/prepare` i `POST /kck/submit`, klasyfikacja do 5 kategorii KCK, GPS → adres, anonimowy `multipart/form-data` do KCK (`dto` + `file`), zapis i zwrot `incidentId`. Implementacja według [docs/kck-integration.md](docs/kck-integration.md).
+- [ ] **2.6 Integracja KCK:** `POST /kck/prepare` i `POST /kck/submit`, klasyfikacja do 5 kategorii KCK, GPS → adres, anonimowy `multipart/form-data` do KCK (`dto` + `file`), zapis i zwrot `incidentId`; dopiero po potwierdzonym `incidentId` backend nalicza Graczowi Punkty za Usterkę, dokładnie raz. Implementacja według [docs/kck-integration.md](docs/kck-integration.md).
 
 **Brief ma 9 pól:** tytuł (do 60 znaków), kategoria, problem, proponowane działanie, dlaczego to ważne, potrzebne zasoby (ludzie, sprzęt, transport), Kto naprawi (Miasto / Gildia / Gracze: 2 pytania tak/nie, AI podpowiada, Gracz potwierdza), miejsce i zdjęcie (z telefonu).
 **Bez SWOT i bez wzorców z innych miast:** AI łatwo je wymyśla, a jury zapyta o źródło. Te rzeczy są tylko w pitchu.
