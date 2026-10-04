@@ -11,7 +11,7 @@ Najpierw dowozimy 4 rzeczy, potem je upiększamy.
 ## 🎯 Cel: 4 funkcjonalności
 
 1. **Mapa z Awatarem.** Awatar stoi w prawdziwej pozycji GPS Gracza. Na mapie są pinezki Inicjatyw.
-2. **Zgłoszenie Inicjatywy z AI.** Zdjęcie na żywo na miejscu → Claude zadaje max 3 pytania → krótki **Brief** → Gracz poprawia i zatwierdza → nowa pinezka.
+2. **Zgłoszenie Inicjatywy z AI.** Zdjęcie na żywo na miejscu → OpenAI zadaje max 3 pytania → krótki **Brief** → Gracz poprawia i zatwierdza → nowa pinezka.
 3. **Głos.** Tylko na miejscu (do ok. 50 m od Inicjatywy), jeden Głos na Gracza na Inicjatywę. Przy **Progu** (10 Głosów) Inicjatywa „Przeszła”.
 4. **Punkty i Nagrody** + landing page i logo. Punkty wydaje się na Nagrody od Sponsorów.
 
@@ -23,7 +23,7 @@ Najpierw dowozimy 4 rzeczy, potem je upiększamy.
 - **Ranga** liczy wszystkie Punkty zdobyte kiedykolwiek. Wydanie Punktów jej nie obniża.
 - **Wszystkie Punkty liczy serwer,** nigdy telefon. Za Usterkę Punkty są naliczane dokładnie raz dopiero po tym, gdy KCK przyjmie zgłoszenie i zwróci `incidentId`; przygotowanie szkicu, błąd lub niepotwierdzony timeout nie daje Punktów.
 - **Logowanie:** tylko pseudonim, bez hasła. W pitchu: w pełnej wersji mObywatel.
-- **Klucz API Claude tylko na serwerze** (w `.env`). Repo jest publiczne.
+- **Klucz API OpenAI tylko na serwerze** (w `.env`). Repo jest publiczne.
 - **Usterki miejskie są osobną ścieżką od Inicjatyw.** Typowe usterki (np. dziura, uszkodzony chodnik, zanieczyszczenie, problem z zielenią lub zwierzętami) wysyłamy wyłącznie do Krakowskiego Centrum Kontaktu. Gracz nie wybiera wydziału ani „Kto naprawi”. Szczegóły: [docs/kck-integration.md](docs/kck-integration.md).
 
 ---
@@ -43,7 +43,7 @@ Najpierw dowozimy 4 rzeczy, potem je upiększamy.
 
 - [ ] **2.1 Dane i API:** `Inicjatywy` (id, Inicjator, lat, lng, zdjęcie, Brief, liczba Głosów, status), `Głosy` (Gracz, Inicjatywa — jeden na parę), `Gracze` (pseudonim, saldo, suma Punktów do Rangi), `Nagrody`.
 - [ ] **2.2 Zasady na serwerze:** sprawdzenie 50 m przy Głosie i zgłoszeniu, jeden Głos na Gracza, Próg 10 → status „Przeszła” + premia, wydawanie Punktów na Nagrody.
-- [ ] **2.3 Endpoint AI:** zdjęcie + odpowiedzi Gracza → Claude **Sonnet 5.5** → Brief jako JSON. **Awaria:** po ok. 8 s serwer oddaje gotowy Brief dla zdjęcia z demo. (Wpina Patryk.)
+- [ ] **2.3 Endpoint AI:** zdjęcie + odpowiedzi Gracza → OpenAI **GPT-6.1 Sol** przez Responses API → Brief jako JSON. **Awaria:** po ok. 8 s serwer oddaje gotowy Brief dla zdjęcia z demo. (Wpina Patryk.)
 - [ ] **2.4 „Mózg AI”:** prompt systemowy, `schema.json` Briefu, przykłady rozmów, test na 10–20 zdjęciach. (Tomasz.) Badanie formularzy: [docs/research-ai-form.md](docs/research-ai-form.md).
 - [ ] **2.5 Dane przykładowe:** 3–4 Inicjatywy w Krakowie z gotowymi Briefami + **„Stoisko z gorącą herbatą na HackYeah 2026” przy Tauron Arenie z 9/10 Głosami** + 3 Sponsorzy z Nagrodami.
 - [ ] **2.6 Integracja KCK:** `POST /kck/prepare` i `POST /kck/submit`, klasyfikacja do 5 kategorii KCK, GPS → adres, anonimowy `multipart/form-data` do KCK (`dto` + `file`), zapis i zwrot `incidentId`; dopiero po potwierdzonym `incidentId` backend nalicza Graczowi Punkty za Usterkę, dokładnie raz. Implementacja według [docs/kck-integration.md](docs/kck-integration.md).
