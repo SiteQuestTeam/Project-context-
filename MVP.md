@@ -24,6 +24,7 @@ Najpierw dowozimy 4 rzeczy, potem je upiększamy.
 - **Wszystkie Punkty liczy serwer,** nigdy telefon.
 - **Logowanie:** tylko pseudonim, bez hasła. W pitchu: w pełnej wersji mObywatel.
 - **Klucz API Claude tylko na serwerze** (w `.env`). Repo jest publiczne.
+- **Usterki miejskie są osobną ścieżką od Inicjatyw.** Typowe usterki (np. dziura, uszkodzony chodnik, zanieczyszczenie, problem z zielenią lub zwierzętami) wysyłamy wyłącznie do Krakowskiego Centrum Kontaktu. Gracz nie wybiera wydziału ani „Kto naprawi”. Szczegóły: [docs/kck-integration.md](docs/kck-integration.md).
 
 ---
 
@@ -36,6 +37,7 @@ Najpierw dowozimy 4 rzeczy, potem je upiększamy.
 - [ ] **1.3 Głos:** przycisk `[ Oddaj Głos ]` aktywny tylko w promieniu 50 m. Licznik rośnie, Punkty dochodzą do salda.
 - [ ] **1.4 Zgłoszenie:** aparat (bez galerii) → okno rozmowy z AI (max 3 pytania) → ekran Briefu do poprawy i zatwierdzenia.
 - [ ] **1.5 Portfel i Nagrody:** saldo Punktów, Ranga, lista Nagród od Sponsorów z ceną w Punktach, przycisk „Odbierz”.
+- [ ] **1.6 Usterka → KCK:** Zdjęcie na żywo + GPS → automatyczne przygotowanie kategorii, tytułu, opisu i adresu → ekran podglądu/edycji → `[ Wyślij do KCK ]` → pokazanie numeru zgłoszenia.
 
 ### 🧠 Strumień 2: Backend i AI
 
@@ -44,6 +46,7 @@ Najpierw dowozimy 4 rzeczy, potem je upiększamy.
 - [ ] **2.3 Endpoint AI:** zdjęcie + odpowiedzi Gracza → Claude **Sonnet 5.5** → Brief jako JSON. **Awaria:** po ok. 8 s serwer oddaje gotowy Brief dla zdjęcia z demo. (Wpina Patryk.)
 - [ ] **2.4 „Mózg AI”:** prompt systemowy, `schema.json` Briefu, przykłady rozmów, test na 10–20 zdjęciach. (Tomasz.) Badanie formularzy: [docs/research-ai-form.md](docs/research-ai-form.md).
 - [ ] **2.5 Dane przykładowe:** 3–4 Inicjatywy w Krakowie z gotowymi Briefami + **„Stoisko z gorącą herbatą na HackYeah 2026” przy Tauron Arenie z 9/10 Głosami** + 3 Sponsorzy z Nagrodami.
+- [ ] **2.6 Integracja KCK:** `POST /kck/prepare` i `POST /kck/submit`, klasyfikacja do 5 kategorii KCK, GPS → adres, anonimowy `multipart/form-data` do KCK (`dto` + `file`), zapis i zwrot `incidentId`. Implementacja według [docs/kck-integration.md](docs/kck-integration.md).
 
 **Brief ma 9 pól:** tytuł (do 60 znaków), kategoria, problem, proponowane działanie, dlaczego to ważne, potrzebne zasoby (ludzie, sprzęt, transport), Kto naprawi (Miasto / Gildia / Gracze: 2 pytania tak/nie, AI podpowiada, Gracz potwierdza), miejsce i zdjęcie (z telefonu).
 **Bez SWOT i bez wzorców z innych miast:** AI łatwo je wymyśla, a jury zapyta o źródło. Te rzeczy są tylko w pitchu.
