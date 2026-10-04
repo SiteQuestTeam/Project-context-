@@ -1,6 +1,6 @@
 # SideQuest
 
-An app, like Pokémon Go but for social action, in which residents of Kraków (mostly young adults) propose Initiatives for their neighbourhood, support other people's Initiatives on the spot, and earn Points they spend on Rewards. Built for the Smart City task at HackYeah 2026. The app speaks Polish; the Polish name of each term is given in brackets.
+An app, like Pokémon Go but for social action, in which residents of Kraków (mostly young adults) propose Initiatives for their neighbourhood, support other people's Initiatives on the spot, report ordinary municipal faults through KCK, and earn Points they spend on Rewards. Built for the Smart City task at HackYeah 2026. The app speaks Polish; the Polish name of each term is given in brackets.
 
 The MVP terms come first. The game terms (Scouting, Quest, Raid…) are kept at the end under "Later": they are not part of the MVP and come back only if there is time. The old HubMI glossary (Need, Helper, Application draft…) is in git history.
 
@@ -47,6 +47,15 @@ _Avoid_: company, contractor, partner
 **Vote** (Głos):
 A Player's support for an Initiative ("I back this idea"), given only on the spot, within about 50 m of the Initiative. One Vote per Player per Initiative. It cannot be given from a distance.
 _Avoid_: like, upvote, poparcie, confirmation
+
+## City incidents and KCK
+
+**City incident** (Usterka):
+An existing municipal fault that should be handled by the City, e.g. a pothole, damaged pavement, broken street equipment, pollution, greenery problem or animal-related issue. It is **not an Initiative** and does not collect Votes. In the MVP all City incidents are prepared in SideQuest and sent to Krakowskie Centrum Kontaktu (KCK) only after the Player reviews the generated data and explicitly taps “Wyślij do KCK”. SideQuest uses the Live photo and GPS; AI proposes one of five KCK categories, a title and a short description; the address is derived from GPS.
+_Avoid_: Initiative, Brief, Vote, Threshold, Who fixes
+
+**KCK** (Krakowskie Centrum Kontaktu):
+The official Kraków reporting channel used by SideQuest for City incidents. The Player never chooses the municipal department. SideQuest sends anonymous reports in the MVP and stores the returned KCK `incidentId`. Technical integration rules: [docs/kck-integration.md](docs/kck-integration.md).
 
 ## Status
 
