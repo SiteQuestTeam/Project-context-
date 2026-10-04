@@ -92,6 +92,24 @@ Wybiera reguła w kodzie, a nie AI: Kto naprawi = Miasto, gdy `city_needed: true
 - Miasto: „Twój Brief ma format Budżetu Obywatelskiego. Gdy zbierze {Próg} Głosów, pokażemy, jak złożyć go w mieście.”
 - Gracze: „Tę zmianę możecie zrobić sami z sąsiadami. Gdy zbierze {Próg} Głosów, pokażemy, jak zacząć.”
 
+**Pod spodem: karta „🎓 Co mogę zrobić z tym pomysłem?”** (zwinięta, rozwija się po dotknięciu). Pokazujemy ją przy publikacji i przy „Przeszła”. Jak inne linie nauki znika (zwija się) po 3 zgłoszeniach.
+
+> **Budżet Obywatelski: miasto robi to za swoje pieniądze.**
+> - Składasz projekt na budzet.krakow.pl. Potrzebne jest konto z numerem PESEL.
+> - Do projektu dołączasz 15 podpisów mieszkańców, kosztorys i harmonogram.
+> - Potem mieszkańcy głosują. Projekty, które wygrają, realizuje miasto.
+> - Pasuje do większych zmian, na przykład nowego chodnika albo placu zabaw. W edycji 2026 do podziału jest 54 mln zł.
+>
+> **Inicjatywa lokalna: robicie to razem z miastem.**
+> - Mieszkańcy dają własną pracę, na przykład sadzenie albo malowanie. Miasto pomaga, na przykład materiałami.
+> - Nie ma głosowania. Miasto ocenia wniosek i daje punkty, między innymi za pracę mieszkańców i za pozytywną opinię Rady Dzielnicy.
+> - Realizacja zaczyna się najwcześniej 8 tygodni po złożeniu wniosku.
+> - Pasuje do mniejszych zmian, które sąsiedzi mogą zrobić sami z pomocą miasta.
+>
+> **Jak wybrać?** Duża zmiana, którą ma zrobić miasto: Budżet Obywatelski. Chcecie zrobić coś sami, a miasto ma pomóc: inicjatywa lokalna.
+
+Źródła: [research 1a (inicjatywa lokalna) i 1b (Budżet Obywatelski, kwota 54 mln zł)](../docs/research-ai-form.md).
+
 **Przy „Przeszła” (całość), szkic do sprawdzenia:**
 - Miasto:
   - „**Budżet Obywatelski:** złóż projekt na budzet.krakow.pl. Potrzebujesz 15 podpisów mieszkańców. Tytuł i kategoria z Briefu pasują do formularza.”
